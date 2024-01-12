@@ -22,7 +22,7 @@ const initialState: NotesState = {
 };
 
 export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
-  const response = await axios.get(import.meta.env.VITE_APP_BASE_URL); // Replace with your backend API endpoint
+  const response = await axios.get(import.meta.env.VITE_APP_BASE_URL);
   return response.data;
 });
 

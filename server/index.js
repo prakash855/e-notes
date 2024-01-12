@@ -1,8 +1,10 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
 
-import notesRoutes from "./routes/notes";
+import notesRoutes from "./routes/notes.js";
 
 const app = express();
 dotenv.config();

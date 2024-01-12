@@ -15,6 +15,9 @@ const notesSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    backgroundColor: {
+      type: String,
+    },
   },
   { Timestamps: true }
 );

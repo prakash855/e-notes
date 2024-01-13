@@ -22,7 +22,7 @@ const initialState: NotesState = {
 };
 
 export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
-  const response = await axios.get(import.meta.env.VITE_APP_BASE_URL);
+  const response = await axios(import.meta.env.VITE_APP_BASE_URL);
   return response.data;
 });
 

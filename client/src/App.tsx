@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import Header from "./components/header/header";
-import NoteCard from "./components/note-card";
+import NoteCard from "./components/note-card/note-card";
 import { fetchNotes, Note } from "./slices/services";
 import { AppDispatch, RootState } from "./store";
 

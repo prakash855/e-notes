@@ -14,8 +14,8 @@ import { BsPin, BsFillPinFill } from "react-icons/bs";
 import { IoColorPaletteOutline, IoArchiveOutline } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import styles from "./note-card.module.scss";
-import { getIconHoverClass } from "../style";
-import { Note } from "../slices/services";
+import { getIconHoverClass } from "../../style";
+import { Note } from "../../slices/services";
 
 const NoteCard: FC = ({ title, content, isArchived }: Note) => {
   const [isHovered, setHovered] = useState(false);

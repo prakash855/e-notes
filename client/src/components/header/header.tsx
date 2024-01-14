@@ -36,6 +36,7 @@ const Header: FC = () => {
       e.preventDefault();
       disptach(createNotes(notesState));
       setNotesState(initialState);
+      setSubmitted(false);
     },
     [notesState, disptach]
   );

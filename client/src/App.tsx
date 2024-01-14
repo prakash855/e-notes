@@ -1,14 +1,20 @@
 import { useSelector } from "react-redux";
 import "./App.css";
+import NoteCard from "./components/note-card";
 
 function App() {
   const state = useSelector((state) => state);
   console.log(state);
 
   return (
-    <>
-      <h1 className="text-3xl text-center font-bold">Hello world!</h1>
-    </>
+    <div className="flex gap-5 flex-wrap">
+      <NoteCard />
+      <NoteCard />
+      <NoteCard />
+      <NoteCard />
+      <NoteCard />
+      <NoteCard />
+    </div>
   );
 }
 

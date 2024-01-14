@@ -1,5 +1,4 @@
 import { FC } from "react";
-
 import {
   Card,
   CardHeader,
@@ -13,7 +12,7 @@ import {
 
 const NoteCard: FC = () => {
   return (
-    <Card>
+    <Card width={300} background={"aliceblue"}>
       <CardHeader>
         <Heading size="md">Client Report</Heading>
       </CardHeader>
@@ -21,27 +20,12 @@ const NoteCard: FC = () => {
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
           <Box>
-            <Heading size="xs" textTransform="uppercase">
-              Summary
-            </Heading>
             <Text pt="2" fontSize="sm">
-              View a summary of all your clients over the last month.
-            </Text>
-          </Box>
-          <Box>
-            <Heading size="xs" textTransform="uppercase">
-              Overview
-            </Heading>
-            <Text pt="2" fontSize="sm">
-              Check out the overview of your clients.
-            </Text>
-          </Box>
-          <Box>
-            <Heading size="xs" textTransform="uppercase">
-              Analysis
-            </Heading>
-            <Text pt="2" fontSize="sm">
-              See a detailed analysis of all your business clients.
+              See a detailed analysis of all your business clients. Lorem, ipsum
+              dolor sit amet consectetur adipisicing elit. Tempora unde magnam
+              incidunt dolores harum enim reiciendis magni voluptatem
+              voluptatibus voluptates accusantium sint in, cum nostrum
+              voluptatum illo asperiores! Facere, sed.
             </Text>
           </Box>
         </Stack>

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 
 import {
   Button,
@@ -15,6 +15,9 @@ import {
 } from "@chakra-ui/react";
 
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
+import { useDispatch } from "react-redux";
+import { createNotes } from "../../slices/services";
+import { AppDispatch } from "../../store";
 
 const initialState = {
   title: "",
@@ -24,14 +27,18 @@ const initialState = {
 };
 
 const Header: FC = () => {
+  const disptach = useDispatch<AppDispatch>();
   const [notesState, setNotesState] = useState(initialState);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    console.log(notesState);
-    setNotesState(initialState);
-  };
+  const handleSubmit = useCallback(
+    (e: { preventDefault: () => void }) => {
+      e.preventDefault();
+      disptach(createNotes(notesState));
+      setNotesState(initialState);
+    },
+    [notesState, disptach]
+  );
 
   return (
     <div className="flex justify-end m-5">

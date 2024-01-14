@@ -1,12 +1,19 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import Header from "./components/header/header";
 import NoteCard from "./components/note-card";
+import { fetchNotes, Note } from "./slices/services";
+import { AppDispatch, RootState } from "./store";
 
 function App() {
-  const state = useSelector((state) => state);
-  console.log(state);
+  const dispatch = useDispatch<AppDispatch>();
+  const { notes } = useSelector((state: RootState) => state);
+
+  useEffect(() => {
+    dispatch(fetchNotes());
+  }, [dispatch]);
 
   return (
     <>
@@ -22,12 +29,9 @@ function App() {
         </GridItem>
         <GridItem colSpan={4}>
           <div className="flex gap-5 flex-wrap justify-center my-4">
-            <NoteCard />
-            <NoteCard />
-            <NoteCard />
-            <NoteCard />
-            <NoteCard />
-            <NoteCard />
+            {notes?.notes?.map((note: Note) => (
+              <NoteCard key={note._id} {...note} />
+            ))}
           </div>
         </GridItem>
       </Grid>

@@ -31,6 +31,7 @@ const NoteCard: FC = () => {
 
   return (
     <Card
+      cursor={`pointer`}
       width={300}
       background={"aliceblue"}
       onMouseEnter={() => setHovered(true)}

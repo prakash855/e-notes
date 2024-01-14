@@ -7,14 +7,10 @@ type ModalProps = {
   children: ReactNode;
 };
 
-const CreateAndUpdateModal = ({ isOpen, onClose, children }: ModalProps) => {
-  return (
-    <>
-      <NativeModal isOpen={isOpen} onClose={onClose}>
-        {children}
-      </NativeModal>
-    </>
-  );
-};
+const CreateAndUpdateModal = ({ isOpen, onClose, children }: ModalProps) => (
+  <NativeModal isOpen={isOpen} onClose={onClose}>
+    {children}
+  </NativeModal>
+);
 
 export default CreateAndUpdateModal;

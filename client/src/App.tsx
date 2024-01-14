@@ -1,6 +1,7 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import "./App.css";
+import Header from "./components/header/header";
 import NoteCard from "./components/note-card";
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
         gap={4}
       >
         <GridItem rowSpan={2} colSpan={1} bg="tomato" />
-        <GridItem colSpan={4} bg="papayawhip" />
+        <GridItem colSpan={4}>
+          <Header />
+        </GridItem>
         <GridItem colSpan={4}>
           <div className="flex gap-5 flex-wrap justify-center my-4">
             <NoteCard />

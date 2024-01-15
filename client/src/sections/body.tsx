@@ -10,7 +10,7 @@ export const Body = () => {
 
   useEffect(() => {
     dispatch(fetchNotes());
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="flex gap-5 flex-wrap my-4">

@@ -1,4 +1,4 @@
-import { FC, SetStateAction, useCallback, useState } from "react";
+import { FC, SetStateAction, useCallback, useEffect, useState } from "react";
 import {
   Button,
   FormControl,
@@ -13,10 +13,14 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { colorOptions } from "../../constants";
+import { useDispatch } from "react-redux";
+import { fetchNotesById } from "../../slices/services";
+import { AppDispatch } from "../../store";
 
 interface NoteFormProps {
+  id?: string;
   onSubmit: (data: {
-    title: string;
+    title: string | undefined;
     content: string;
     backgroundColor: string;
   }) => void;
@@ -24,12 +28,18 @@ interface NoteFormProps {
   editMode?: boolean;
 }
 
-const NoteForm: FC<NoteFormProps> = ({ onSubmit, initialData, editMode }) => {
+const NoteForm: FC<NoteFormProps> = ({
+  id,
+  onSubmit,
+  initialData,
+  editMode,
+}) => {
   const [notesState, setNotesState] = useState({
     title: initialData?.title || "",
     content: initialData?.content || "",
     backgroundColor: initialData?.backgroundColor || "",
   });
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSelectChange = useCallback(
     (event: { target: { value: SetStateAction<string> } }) => {
@@ -55,9 +65,34 @@ const NoteForm: FC<NoteFormProps> = ({ onSubmit, initialData, editMode }) => {
     [notesState, onSubmit]
   );
 
-  if (editMode) {
-    console.log("edit Mode");
-  } else console.log("create mode");
+  useEffect(() => {
+    let isMounted = true;
+    const fetchData = async () => {
+      try {
+        if (id) {
+          const response = await dispatch(fetchNotesById(id));
+
+          if (isMounted && response.payload) {
+            setNotesState((notesState) => ({
+              ...notesState,
+              ...response.payload,
+            }));
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    // If edit button is clicked and Id is passed properly
+    if (editMode && id) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [editMode, id, dispatch]);
+
   return (
     <>
       <ModalOverlay />

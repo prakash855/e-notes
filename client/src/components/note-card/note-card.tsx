@@ -16,7 +16,7 @@ import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
 import styles from "./note-card.module.scss";
 import { getIconHoverClass } from "../../style";
-import { deleteNotes, Note } from "../../slices/services";
+import { deleteNotes, Note, updateNotes } from "../../slices/services";
 import { formatDate } from "../../utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
@@ -61,13 +61,24 @@ const NoteCard: FC = ({
     setEditMode(true);
   };
 
+  const handleSubmit = useCallback(
+    (data: Note) => {
+      dispatch(updateNotes(data));
+      setSubmitted(false);
+    },
+    [dispatch]
+  );
+
   return (
     <>
       <CreateAndUpdateModal
         isOpen={submitted}
-        onClose={() => setSubmitted(false)}
+        onClose={() => {
+          setSubmitted(false);
+          setEditMode(false);
+        }}
       >
-        <NoteForm editMode={editMode} onSubmit={() => {}} />
+        <NoteForm id={id} editMode={editMode} onSubmit={handleSubmit} />
       </CreateAndUpdateModal>
       <Card
         cursor={`pointer`}

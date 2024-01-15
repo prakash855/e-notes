@@ -3,6 +3,7 @@ import {
   createNotes,
   deleteNotes,
   fetchNotes,
+  fetchNotesById,
   initialState,
   updateNotes,
 } from "./services";
@@ -24,6 +25,19 @@ const notesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message ?? null;
       })
+
+      .addCase(fetchNotesById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchNotesById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.selectedNote = action.payload;
+      })
+      .addCase(fetchNotesById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? null;
+      })
+
       .addCase(createNotes.pending, (state) => {
         state.status = "loading";
       })
@@ -35,6 +49,7 @@ const notesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message ?? null;
       })
+
       .addCase(deleteNotes.pending, (state) => {
         state.status = "loading";
       })
@@ -46,13 +61,14 @@ const notesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message ?? null;
       })
+
       .addCase(updateNotes.pending, (state) => {
         state.status = "loading";
       })
       .addCase(updateNotes.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.notes = state.notes.map((note) =>
-          note._id === action.payload ? action.payload : note
+          note._id === action.payload._id ? action.payload : note
         );
       })
       .addCase(updateNotes.rejected, (state, action) => {

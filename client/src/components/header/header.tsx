@@ -13,7 +13,7 @@ const Header: FC = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const handleSubmit = (data: {
-    title: string;
+    title: string | undefined;
     content: string;
     backgroundColor: string;
   }) => {

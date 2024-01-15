@@ -10,6 +10,18 @@ export const getNotes = async (req, res) => {
   }
 };
 
+export const getNotesById = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No note with this ID`);
+  try {
+    const { data } = await axios(`${API}/${id}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createNotes = async (req, res) => {
   const note = req.body;
   const newNote = new Note(note);

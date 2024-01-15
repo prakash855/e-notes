@@ -19,6 +19,7 @@ import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import { useDispatch } from "react-redux";
 import { createNotes } from "../../slices/services";
 import { AppDispatch } from "../../store";
+import { colorOptions } from "../../constants";
 
 const initialState = {
   title: "",
@@ -26,19 +27,6 @@ const initialState = {
   backgroundColor: "",
   isArchived: false,
 };
-
-const colorOptions = [
-  { value: "gray.500", label: "Gray" },
-  { value: "red.500", label: "Red" },
-  { value: "orange.500", label: "Orange" },
-  { value: "yellow.500", label: "Yellow" },
-  { value: "green.500", label: "Green" },
-  { value: "teal.500", label: "Teal" },
-  { value: "blue.500", label: "Blue" },
-  { value: "cyan.500", label: "Cyan" },
-  { value: "purple.500", label: "Purple" },
-  { value: "pink.500", label: "Pink" },
-];
 
 const Header: FC = () => {
   const disptach = useDispatch<AppDispatch>();

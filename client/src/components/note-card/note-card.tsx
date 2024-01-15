@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 
 import {
   Card,
@@ -16,10 +16,13 @@ import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
 import styles from "./note-card.module.scss";
 import { getIconHoverClass } from "../../style";
-import { Note } from "../../slices/services";
+import { deleteNotes, Note } from "../../slices/services";
 import { formatDate } from "../../utils";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
 
 const NoteCard: FC = ({
+  _id: id,
   title,
   content,
   createdAt,
@@ -27,6 +30,15 @@ const NoteCard: FC = ({
   backgroundColor,
 }: Note) => {
   const [isHovered, setHovered] = useState(false);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleDeleteNotes = useCallback(
+    (id: string) => {
+      dispatch(deleteNotes(id));
+    },
+    [dispatch]
+  );
 
   const PinnedIcon = () => (
     <div className={getIconHoverClass(isHovered)}>
@@ -65,7 +77,10 @@ const NoteCard: FC = ({
             <Box className={getIconHoverClass(isHovered)}>
               <IoColorPaletteOutline className={styles["icon-style"]} />
               <IoArchiveOutline className={styles["icon-style"]} />
-              <MdDeleteOutline className={styles["icon-style"]} />
+              <MdDeleteOutline
+                onClick={() => handleDeleteNotes(id)}
+                className={styles["icon-style"]}
+              />
               <MdOutlineEdit className={styles["icon-style"]} />
             </Box>
           </div>

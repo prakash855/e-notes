@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNotes, fetchNotes, initialState } from "./services";
+import { createNotes, deleteNotes, fetchNotes, initialState } from "./services";
 
 const notesSlice = createSlice({
   name: "notes",
@@ -26,6 +26,17 @@ const notesSlice = createSlice({
         state.notes.push(action.payload);
       })
       .addCase(createNotes.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? null;
+      })
+      .addCase(deleteNotes.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteNotes.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.notes = state.notes.filter((note) => note._id !== action.payload);
+      })
+      .addCase(deleteNotes.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message ?? null;
       });

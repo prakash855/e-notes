@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNotes, deleteNotes, fetchNotes, initialState } from "./services";
+import {
+  createNotes,
+  deleteNotes,
+  fetchNotes,
+  fetchNotesById,
+  initialState,
+  updateNotes,
+} from "./services";
 
 const notesSlice = createSlice({
   name: "notes",
@@ -18,6 +25,19 @@ const notesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message ?? null;
       })
+
+      .addCase(fetchNotesById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchNotesById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.selectedNote = action.payload;
+      })
+      .addCase(fetchNotesById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? null;
+      })
+
       .addCase(createNotes.pending, (state) => {
         state.status = "loading";
       })
@@ -29,6 +49,7 @@ const notesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message ?? null;
       })
+
       .addCase(deleteNotes.pending, (state) => {
         state.status = "loading";
       })
@@ -37,6 +58,20 @@ const notesSlice = createSlice({
         state.notes = state.notes.filter((note) => note._id !== action.payload);
       })
       .addCase(deleteNotes.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? null;
+      })
+
+      .addCase(updateNotes.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateNotes.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.notes = state.notes.map((note) =>
+          note._id === action.payload._id ? action.payload : note
+        );
+      })
+      .addCase(updateNotes.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message ?? null;
       });

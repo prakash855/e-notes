@@ -1,14 +1,7 @@
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import {
-  Button,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 import { createNotes } from "../../slices/services";
 import { AppDispatch } from "../../store";
@@ -20,7 +13,7 @@ const Header: FC = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const handleSubmit = (data: {
-    title: string;
+    title: string | undefined;
     content: string;
     backgroundColor: string;
   }) => {
@@ -35,14 +28,7 @@ const Header: FC = () => {
         isOpen={submitted}
         onClose={() => setSubmitted(false)}
       >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create your note</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <NoteForm onSubmit={handleSubmit} />
-          </ModalBody>
-        </ModalContent>
+        <NoteForm onSubmit={handleSubmit} />
       </CreateAndUpdateModal>
     </div>
   );

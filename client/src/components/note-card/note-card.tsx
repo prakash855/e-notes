@@ -14,30 +14,37 @@ import { BsPin, BsFillPinFill } from "react-icons/bs";
 import { IoColorPaletteOutline, IoArchiveOutline } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import styles from "./note-card.module.scss";
-import { getIconHoverClass } from "../style";
+import { getIconHoverClass } from "../../style";
+import { Note } from "../../slices/services";
 
-const NoteCard: FC = () => {
+const NoteCard: FC = ({
+  title,
+  content,
+  isArchived,
+  backgroundColor,
+}: Note) => {
   const [isHovered, setHovered] = useState(false);
 
   const PinnedIcon = () => (
     <div className={getIconHoverClass(isHovered)}>
-      {true ? (
-        <BsPin className={styles["icon-style"]} />
-      ) : (
+      {isArchived ? (
         <BsFillPinFill className={styles["icon-style"]} />
+      ) : (
+        <BsPin className={styles["icon-style"]} />
       )}
     </div>
   );
 
   return (
     <Card
+      cursor={`pointer`}
       width={300}
-      background={"aliceblue"}
+      background={backgroundColor}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <CardHeader className="flex justify-between items-center">
-        <Heading size="md">Client Report</Heading>
+        <Heading size="md">{title}</Heading>
         <PinnedIcon />
       </CardHeader>
 
@@ -45,11 +52,7 @@ const NoteCard: FC = () => {
         <Stack divider={<StackDivider />} spacing="4">
           <Box>
             <Text pt="2" fontSize="sm">
-              See a detailed analysis of all your business clients. Lorem, ipsum
-              dolor sit amet consectetur adipisicing elit. Tempora unde magnam
-              incidunt dolores harum enim reiciendis magni voluptatem
-              voluptatibus voluptates accusantium sint in, cum nostrum
-              voluptatum illo asperiores! Facere, sed.
+              {content}
             </Text>
           </Box>
           <Box className={getIconHoverClass(isHovered)}>

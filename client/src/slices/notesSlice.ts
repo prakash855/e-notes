@@ -1,30 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-interface Note {
-  _id: string;
-  title: string;
-  content: string;
-  archived: boolean;
-  backgroundColor: string;
-}
-
-interface NotesState {
-  notes: Note[];
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
-}
-
-const initialState: NotesState = {
-  notes: [],
-  status: "idle",
-  error: null,
-};
-
-export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
-  const response = await axios(import.meta.env.VITE_APP_BASE_URL);
-  return response.data;
-});
+import { createSlice } from "@reduxjs/toolkit";
+import { createNotes, fetchNotes, initialState } from "./services";
 
 const notesSlice = createSlice({
   name: "notes",
@@ -40,6 +15,17 @@ const notesSlice = createSlice({
         state.notes = action.payload;
       })
       .addCase(fetchNotes.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? null;
+      })
+      .addCase(createNotes.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createNotes.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.notes.push(action.payload);
+      })
+      .addCase(createNotes.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message ?? null;
       });

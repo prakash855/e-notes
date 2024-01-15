@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  archiveNoteById,
   createNotes,
   deleteNotes,
   fetchNotes,
@@ -72,6 +73,20 @@ const notesSlice = createSlice({
         );
       })
       .addCase(updateNotes.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? null;
+      })
+
+      .addCase(archiveNoteById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(archiveNoteById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.notes = state.notes.filter(
+          (note) => note._id !== action.payload._id
+        );
+      })
+      .addCase(archiveNoteById.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message ?? null;
       });

@@ -10,13 +10,15 @@ export const Body = () => {
 
   useEffect(() => {
     dispatch(fetchNotes());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="flex gap-5 flex-wrap my-4">
-      {notes?.notes?.map((note: Note) => (
-        <NoteCard key={note._id} {...note} />
-      ))}
+      {notes?.notes
+        ?.filter((note: Note) => !note.isArchived)
+        ?.map((note: Note) => (
+          <NoteCard key={note._id} {...note} />
+        ))}
     </div>
   );
 };

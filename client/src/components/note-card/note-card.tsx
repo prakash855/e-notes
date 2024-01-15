@@ -16,7 +16,12 @@ import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
 import styles from "./note-card.module.scss";
 import { getIconHoverClass } from "../../style";
-import { deleteNotes, Note, updateNotes } from "../../slices/services";
+import {
+  archiveNoteById,
+  deleteNotes,
+  Note,
+  updateNotes,
+} from "../../slices/services";
 import { formatDate } from "../../utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
@@ -60,6 +65,12 @@ const NoteCard: FC = ({
     setSubmitted(true);
     setEditMode(true);
   };
+
+  const handleArchive = useCallback(() => {
+    if (id) {
+      dispatch(archiveNoteById(id));
+    }
+  }, [dispatch, id]);
 
   const handleSubmit = useCallback(
     (data: Note) => {
@@ -105,7 +116,10 @@ const NoteCard: FC = ({
               </div>
               <Box className={getIconHoverClass(isHovered)}>
                 <IoColorPaletteOutline className={styles["icon-style"]} />
-                <IoArchiveOutline className={styles["icon-style"]} />
+                <IoArchiveOutline
+                  onClick={handleArchive}
+                  className={styles["icon-style"]}
+                />
                 <MdDeleteOutline
                   onClick={() => handleDeleteNotes(id)}
                   className={styles["icon-style"]}

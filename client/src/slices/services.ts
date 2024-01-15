@@ -66,3 +66,11 @@ export const updateNotes = createAsyncThunk(
     return data;
   }
 );
+
+export const archiveNoteById = createAsyncThunk(
+  "notes/archiveNotes",
+  async (_id: string) => {
+    const { data } = await axios.patch(`${API}/${_id}/archive`);
+    return data;
+  }
+);

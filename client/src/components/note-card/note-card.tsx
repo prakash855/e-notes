@@ -1,11 +1,11 @@
 import { FC, useState } from "react";
+
 import {
   Card,
   CardHeader,
   CardBody,
   Heading,
   Stack,
-  StackDivider,
   Box,
   Text,
 } from "@chakra-ui/react";
@@ -13,13 +13,16 @@ import {
 import { BsPin, BsFillPinFill } from "react-icons/bs";
 import { IoColorPaletteOutline, IoArchiveOutline } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
+
 import styles from "./note-card.module.scss";
 import { getIconHoverClass } from "../../style";
 import { Note } from "../../slices/services";
+import { formatDate } from "../../utils";
 
 const NoteCard: FC = ({
   title,
   content,
+  createdAt,
   isArchived,
   backgroundColor,
 }: Note) => {
@@ -48,19 +51,24 @@ const NoteCard: FC = ({
         <PinnedIcon />
       </CardHeader>
 
-      <CardBody>
-        <Stack divider={<StackDivider />} spacing="4">
+      <CardBody className="flex flex-col justify-between">
+        <Stack spacing="4">
           <Box>
             <Text pt="2" fontSize="sm">
               {content}
             </Text>
           </Box>
-          <Box className={getIconHoverClass(isHovered)}>
-            <IoColorPaletteOutline className={styles["icon-style"]} />
-            <IoArchiveOutline className={styles["icon-style"]} />
-            <MdDeleteOutline className={styles["icon-style"]} />
-            <MdOutlineEdit className={styles["icon-style"]} />
-          </Box>
+          <div className="flex items-center justify-between">
+            <div className={getIconHoverClass(isHovered)}>
+              {formatDate(createdAt)}
+            </div>
+            <Box className={getIconHoverClass(isHovered)}>
+              <IoColorPaletteOutline className={styles["icon-style"]} />
+              <IoArchiveOutline className={styles["icon-style"]} />
+              <MdDeleteOutline className={styles["icon-style"]} />
+              <MdOutlineEdit className={styles["icon-style"]} />
+            </Box>
+          </div>
         </Stack>
       </CardBody>
     </Card>

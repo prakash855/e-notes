@@ -19,7 +19,7 @@ const notesSchema = new Schema(
       type: String,
     },
   },
-  { Timestamps: true }
+  { timestamps: true }
 );
 
 export const Note = model("Note", notesSchema);

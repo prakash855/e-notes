@@ -34,8 +34,10 @@ const NoteCard: FC = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const handleDeleteNotes = useCallback(
-    (id: string) => {
-      dispatch(deleteNotes(id));
+    (id?: string) => {
+      if (id) {
+        dispatch(deleteNotes(id));
+      } else console.log(`Invalid id`);
     },
     [dispatch]
   );

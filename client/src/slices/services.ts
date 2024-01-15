@@ -45,3 +45,14 @@ export const deleteNotes = createAsyncThunk(
     return _id;
   }
 );
+
+export const updateNotes = createAsyncThunk(
+  "notes/updatedNotes",
+  async (updatedNote: Note) => {
+    const { data } = await axios.patch(
+      `${API}/${updatedNote._id}`,
+      updatedNote
+    );
+    return data;
+  }
+);

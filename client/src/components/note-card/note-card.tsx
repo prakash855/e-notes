@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { BsPin, BsFillPinFill } from "react-icons/bs";
-import { IoColorPaletteOutline, IoArchiveOutline } from "react-icons/io5";
+import { IoArchiveOutline } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
 import styles from "./note-card.module.scss";
@@ -39,7 +39,6 @@ const NoteCard: FC = ({
   const [isHovered, setHovered] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
-  const [openThemeModal, setOpenThemeModal] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -89,15 +88,6 @@ const NoteCard: FC = ({
       >
         <NoteForm id={id} editMode={editMode} onSubmit={handleSubmit} />
       </CreateAndUpdateModal>
-      <CreateAndUpdateModal
-        isOpen={openThemeModal}
-        onClose={() => {
-          setOpenThemeModal(false);
-          setHovered(false); // Add this line to make sure isHovered is set to false
-        }}
-      >
-        Hello
-      </CreateAndUpdateModal>
       <Card
         cursor={`pointer`}
         width={300}
@@ -122,10 +112,6 @@ const NoteCard: FC = ({
                 {formatDate(createdAt)}
               </div>
               <Box className={getIconHoverClass(isHovered)}>
-                <IoColorPaletteOutline
-                  onClick={() => setOpenThemeModal(true)}
-                  className={styles["icon-style"]}
-                />
                 <IoArchiveOutline
                   onClick={handleArchive}
                   className={styles["icon-style"]}

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { BsPin, BsFillPinFill } from "react-icons/bs";
-import { IoColorPaletteOutline, IoArchiveOutline } from "react-icons/io5";
+import { IoArchiveOutline } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
 import styles from "./note-card.module.scss";
@@ -38,18 +38,15 @@ const NoteCard: FC = ({
 }: Note) => {
   const [isHovered, setHovered] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleDeleteNotes = useCallback(
-    (id?: string) => {
-      if (id) {
-        dispatch(deleteNotes(id));
-      } else console.log(`Invalid id`);
-    },
-    [dispatch]
-  );
+  const handleDeleteNotes = useCallback(() => {
+    if (id) {
+      dispatch(deleteNotes(id));
+    } else console.log(`Invalid id`);
+  }, [id, dispatch]);
 
   const PinnedIcon = () => (
     <div className={getIconHoverClass(isHovered)}>
@@ -62,7 +59,7 @@ const NoteCard: FC = ({
   );
 
   const openUpdateModal = () => {
-    setSubmitted(true);
+    setOpenEditModal(true);
     setEditMode(true);
   };
 
@@ -75,7 +72,7 @@ const NoteCard: FC = ({
   const handleSubmit = useCallback(
     (data: Note) => {
       dispatch(updateNotes(data));
-      setSubmitted(false);
+      setOpenEditModal(false);
     },
     [dispatch]
   );
@@ -83,9 +80,9 @@ const NoteCard: FC = ({
   return (
     <>
       <CreateAndUpdateModal
-        isOpen={submitted}
+        isOpen={openEditModal}
         onClose={() => {
-          setSubmitted(false);
+          setOpenEditModal(false);
           setEditMode(false);
         }}
       >
@@ -115,13 +112,12 @@ const NoteCard: FC = ({
                 {formatDate(createdAt)}
               </div>
               <Box className={getIconHoverClass(isHovered)}>
-                <IoColorPaletteOutline className={styles["icon-style"]} />
                 <IoArchiveOutline
                   onClick={handleArchive}
                   className={styles["icon-style"]}
                 />
                 <MdDeleteOutline
-                  onClick={() => handleDeleteNotes(id)}
+                  onClick={handleDeleteNotes}
                   className={styles["icon-style"]}
                 />
                 <MdOutlineEdit

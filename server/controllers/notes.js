@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Note } from "../models/notes.js";
 
 export const getNotes = async (req, res) => {
@@ -18,4 +19,12 @@ export const createNotes = async (req, res) => {
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
+};
+
+export const deleteNotes = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No post with this ID`);
+  await Note.findByIdAndDelete(id);
+  res.json({ message: `Notes deleted successfully!` });
 };

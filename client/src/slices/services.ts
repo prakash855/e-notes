@@ -37,3 +37,11 @@ export const createNotes = createAsyncThunk(
     return data;
   }
 );
+
+export const deleteNotes = createAsyncThunk(
+  "notes/deleteNotes",
+  async (_id: string) => {
+    await axios.delete(`${API}/${_id}`);
+    return _id;
+  }
+);

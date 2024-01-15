@@ -15,6 +15,6 @@ router.get("/:id", getNotesById);
 router.post("/", createNotes);
 router.delete("/:id", deleteNotes);
 router.patch("/:id", updateNotes);
-router.patch(":/archive", archiveNotes);
+router.patch("/:id/archive", archiveNotes);
 
 export default router;

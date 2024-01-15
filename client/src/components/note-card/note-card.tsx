@@ -42,14 +42,11 @@ const NoteCard: FC = ({
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleDeleteNotes = useCallback(
-    (id?: string) => {
-      if (id) {
-        dispatch(deleteNotes(id));
-      } else console.log(`Invalid id`);
-    },
-    [dispatch]
-  );
+  const handleDeleteNotes = useCallback(() => {
+    if (id) {
+      dispatch(deleteNotes(id));
+    } else console.log(`Invalid id`);
+  }, [id, dispatch]);
 
   const PinnedIcon = () => (
     <div className={getIconHoverClass(isHovered)}>
@@ -121,7 +118,7 @@ const NoteCard: FC = ({
                   className={styles["icon-style"]}
                 />
                 <MdDeleteOutline
-                  onClick={() => handleDeleteNotes(id)}
+                  onClick={handleDeleteNotes}
                   className={styles["icon-style"]}
                 />
                 <MdOutlineEdit

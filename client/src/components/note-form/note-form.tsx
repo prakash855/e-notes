@@ -6,6 +6,11 @@ import {
   Input,
   Select,
   Textarea,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import { colorOptions } from "../../constants";
 
@@ -50,48 +55,57 @@ const NoteForm: FC<NoteFormProps> = ({ onSubmit, initialData }) => {
   );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormControl>
-        <FormLabel>Title</FormLabel>
-        <Input
-          placeholder="Add Title"
-          value={notesState.title}
-          onChange={(e) =>
-            setNotesState({ ...notesState, title: e.target.value })
-          }
-        />
-      </FormControl>
+    <>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Create your note</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody pb={6}>
+          <form onSubmit={handleSubmit}>
+            <FormControl>
+              <FormLabel>Title</FormLabel>
+              <Input
+                placeholder="Add Title"
+                value={notesState.title}
+                onChange={(e) =>
+                  setNotesState({ ...notesState, title: e.target.value })
+                }
+              />
+            </FormControl>
 
-      <FormControl mt={4}>
-        <FormLabel>Description</FormLabel>
-        <Textarea
-          value={notesState.content}
-          onChange={(e) =>
-            setNotesState({ ...notesState, content: e.target.value })
-          }
-          placeholder="Add Description"
-        />
-      </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Description</FormLabel>
+              <Textarea
+                value={notesState.content}
+                onChange={(e) =>
+                  setNotesState({ ...notesState, content: e.target.value })
+                }
+                placeholder="Add Description"
+              />
+            </FormControl>
 
-      <FormControl mt={4}>
-        <FormLabel>Add Background</FormLabel>
-        <Select
-          value={notesState.backgroundColor}
-          onChange={handleSelectChange}
-          placeholder="Select option"
-        >
-          {colorOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Add Background</FormLabel>
+              <Select
+                value={notesState.backgroundColor}
+                onChange={handleSelectChange}
+                placeholder="Select option"
+              >
+                {colorOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
 
-      <Button type="submit" colorScheme="blue" mt={4}>
-        Add Note
-      </Button>
-    </form>
+            <Button type="submit" colorScheme="blue" mt={4}>
+              Add Note
+            </Button>
+          </form>
+        </ModalBody>
+      </ModalContent>
+    </>
   );
 };
 

@@ -59,3 +59,19 @@ export const updateNotes = async (req, res) => {
   );
   res.json(updatedNotes);
 };
+
+export const archiveNotes = async (req, res) => {
+  const { id: _id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send(`No note with this ID`);
+  try {
+    const note = await Note.findByIdAndUpdate(
+      _id,
+      { isArchived: true },
+      { new: true }
+    );
+    res.json(note);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

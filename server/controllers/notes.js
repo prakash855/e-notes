@@ -12,13 +12,19 @@ export const getNotes = async (req, res) => {
 
 export const getNotesById = async (req, res) => {
   const { id } = req.params;
+
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No note with this ID`);
+
   try {
-    const { data } = await axios(`${API}/${id}`);
-    return data;
+    const note = await Note.findById(id);
+
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+    res.status(200).json(note);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 

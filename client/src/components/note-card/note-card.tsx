@@ -17,7 +17,12 @@ import styles from "./note-card.module.scss";
 import { getIconHoverClass } from "../../style";
 import { Note } from "../../slices/services";
 
-const NoteCard: FC = ({ title, content, isArchived }: Note) => {
+const NoteCard: FC = ({
+  title,
+  content,
+  isArchived,
+  backgroundColor,
+}: Note) => {
   const [isHovered, setHovered] = useState(false);
 
   const PinnedIcon = () => (
@@ -34,7 +39,7 @@ const NoteCard: FC = ({ title, content, isArchived }: Note) => {
     <Card
       cursor={`pointer`}
       width={300}
-      background={"aliceblue"}
+      background={backgroundColor}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

@@ -21,9 +21,10 @@ interface NoteFormProps {
     backgroundColor: string;
   }) => void;
   initialData?: { title: string; content: string; backgroundColor: string };
+  editMode?: boolean;
 }
 
-const NoteForm: FC<NoteFormProps> = ({ onSubmit, initialData }) => {
+const NoteForm: FC<NoteFormProps> = ({ onSubmit, initialData, editMode }) => {
   const [notesState, setNotesState] = useState({
     title: initialData?.title || "",
     content: initialData?.content || "",
@@ -54,6 +55,9 @@ const NoteForm: FC<NoteFormProps> = ({ onSubmit, initialData }) => {
     [notesState, onSubmit]
   );
 
+  if (editMode) {
+    console.log("edit Mode");
+  } else console.log("create mode");
   return (
     <>
       <ModalOverlay />

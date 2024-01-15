@@ -20,6 +20,8 @@ import { deleteNotes, Note } from "../../slices/services";
 import { formatDate } from "../../utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
+import CreateAndUpdateModal from "../modal/create-and-update-modal";
+import NoteForm from "../note-form/note-form";
 
 const NoteCard: FC = ({
   _id: id,
@@ -29,7 +31,9 @@ const NoteCard: FC = ({
   isArchived,
   backgroundColor,
 }: Note) => {
-  const [isHovered, setHovered] = useState(false);
+  const [isHovered, setHovered] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -52,43 +56,59 @@ const NoteCard: FC = ({
     </div>
   );
 
-  return (
-    <Card
-      cursor={`pointer`}
-      width={300}
-      background={backgroundColor}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <CardHeader className="flex justify-between items-center">
-        <Heading size="md">{title}</Heading>
-        <PinnedIcon />
-      </CardHeader>
+  const openUpdateModal = () => {
+    setSubmitted(true);
+    setEditMode(true);
+  };
 
-      <CardBody className="flex flex-col justify-between">
-        <Stack spacing="4">
-          <Box>
-            <Text pt="2" fontSize="sm">
-              {content}
-            </Text>
-          </Box>
-          <div className="flex items-center justify-between">
-            <div className={getIconHoverClass(isHovered)}>
-              {formatDate(createdAt)}
-            </div>
-            <Box className={getIconHoverClass(isHovered)}>
-              <IoColorPaletteOutline className={styles["icon-style"]} />
-              <IoArchiveOutline className={styles["icon-style"]} />
-              <MdDeleteOutline
-                onClick={() => handleDeleteNotes(id)}
-                className={styles["icon-style"]}
-              />
-              <MdOutlineEdit className={styles["icon-style"]} />
+  return (
+    <>
+      <CreateAndUpdateModal
+        isOpen={submitted}
+        onClose={() => setSubmitted(false)}
+      >
+        <NoteForm editMode={editMode} onSubmit={() => {}} />
+      </CreateAndUpdateModal>
+      <Card
+        cursor={`pointer`}
+        width={300}
+        background={backgroundColor}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <CardHeader className="flex justify-between items-center">
+          <Heading size="md">{title}</Heading>
+          <PinnedIcon />
+        </CardHeader>
+
+        <CardBody className="flex flex-col justify-between">
+          <Stack spacing="4">
+            <Box>
+              <Text pt="2" fontSize="sm">
+                {content}
+              </Text>
             </Box>
-          </div>
-        </Stack>
-      </CardBody>
-    </Card>
+            <div className="flex items-center justify-between">
+              <div className={getIconHoverClass(isHovered)}>
+                {formatDate(createdAt)}
+              </div>
+              <Box className={getIconHoverClass(isHovered)}>
+                <IoColorPaletteOutline className={styles["icon-style"]} />
+                <IoArchiveOutline className={styles["icon-style"]} />
+                <MdDeleteOutline
+                  onClick={() => handleDeleteNotes(id)}
+                  className={styles["icon-style"]}
+                />
+                <MdOutlineEdit
+                  onClick={openUpdateModal}
+                  className={styles["icon-style"]}
+                />
+              </Box>
+            </div>
+          </Stack>
+        </CardBody>
+      </Card>
+    </>
   );
 };
 

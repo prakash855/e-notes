@@ -6,7 +6,6 @@ import {
   CardBody,
   Heading,
   Stack,
-  StackDivider,
   Box,
   Text,
 } from "@chakra-ui/react";
@@ -18,10 +17,12 @@ import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import styles from "./note-card.module.scss";
 import { getIconHoverClass } from "../../style";
 import { Note } from "../../slices/services";
+import { formatDate } from "../../utils";
 
 const NoteCard: FC = ({
   title,
   content,
+  createdAt,
   isArchived,
   backgroundColor,
 }: Note) => {
@@ -57,11 +58,11 @@ const NoteCard: FC = ({
               {content}
             </Text>
           </Box>
-          <div className="">
-            <Box
-              style={{ position: "absolute", right: 16, bottom: 16 }}
-              className={getIconHoverClass(isHovered)}
-            >
+          <div className="flex items-center justify-between">
+            <div className={getIconHoverClass(isHovered)}>
+              {formatDate(createdAt)}
+            </div>
+            <Box className={getIconHoverClass(isHovered)}>
               <IoColorPaletteOutline className={styles["icon-style"]} />
               <IoArchiveOutline className={styles["icon-style"]} />
               <MdDeleteOutline className={styles["icon-style"]} />

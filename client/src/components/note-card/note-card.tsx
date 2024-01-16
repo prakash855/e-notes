@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { BsPin, BsFillPinFill } from "react-icons/bs";
+import { BsPin, BsPinFill } from "react-icons/bs";
 import { IoArchiveOutline, IoArchive } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
@@ -19,7 +19,9 @@ import { getIconHoverClass } from "../../style";
 import {
   archiveNoteById,
   deleteNotes,
+  fetchNotes,
   Note,
+  pinNote,
   updateNotes,
 } from "../../slices/services";
 import { formatDate } from "../../utils";
@@ -32,6 +34,7 @@ const NoteCard: FC = ({
   _id: id,
   title,
   content,
+  isPinned,
   createdAt,
   isArchived,
   backgroundColor,
@@ -48,16 +51,6 @@ const NoteCard: FC = ({
     } else console.log(`Invalid id`);
   }, [id, dispatch]);
 
-  const PinnedIcon = () => (
-    <div className={getIconHoverClass(isHovered)}>
-      {isArchived ? (
-        <BsFillPinFill className={styles["icon-style"]} />
-      ) : (
-        <BsPin className={styles["icon-style"]} />
-      )}
-    </div>
-  );
-
   const openUpdateModal = () => {
     setOpenEditModal(true);
     setEditMode(true);
@@ -68,6 +61,15 @@ const NoteCard: FC = ({
       dispatch(archiveNoteById(id));
     }
   }, [dispatch, id]);
+
+  const handlePinned = useCallback(async () => {
+    if (id) {
+      const { payload } = await dispatch(pinNote(id));
+
+      // once pinned calling the notes list API again
+      if (payload) dispatch(fetchNotes());
+    } else return;
+  }, [id, dispatch]);
 
   const handleSubmit = useCallback(
     (data: Note) => {
@@ -97,7 +99,13 @@ const NoteCard: FC = ({
       >
         <CardHeader className="flex justify-between items-center">
           <Heading size="md">{title}</Heading>
-          <PinnedIcon />
+          <div onClick={handlePinned} className={getIconHoverClass(isHovered)}>
+            {isPinned ? (
+              <BsPinFill className={styles["icon-style"]} />
+            ) : (
+              <BsPin className={styles["icon-style"]} />
+            )}
+          </div>
         </CardHeader>
 
         <CardBody className="flex flex-col justify-between">

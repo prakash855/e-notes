@@ -8,6 +8,7 @@ export interface Note {
   createdAt?: string;
   updatedAt?: string;
   isArchived?: boolean;
+  isPinned?: boolean;
   backgroundColor?: string;
 }
 
@@ -74,3 +75,8 @@ export const archiveNoteById = createAsyncThunk(
     return data;
   }
 );
+
+export const pinNote = createAsyncThunk("notes/pinNote", async (id: string) => {
+  const { data } = await axios.patch(`${API}/${id}/pin`);
+  return data;
+});

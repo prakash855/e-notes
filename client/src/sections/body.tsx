@@ -15,15 +15,31 @@ export const Body = () => {
   }, [dispatch, pathname]);
 
   return (
-    <div className="flex gap-5 flex-wrap my-4">
-      {notes?.notes
-        ?.filter((note: Note) =>
-          pathname === `/` ? !note.isArchived : note.isArchived
-        )
-        ?.map((note: Note) => (
-          <NoteCard key={note._id} {...note} />
-        ))}
-    </div>
+    <>
+      <div className="flex gap-5 flex-wrap my-4">
+        {notes?.notes
+          ?.filter((note: Note) => note.isPinned)
+          ?.map((pinnedNote: Note) => (
+            <div>
+              <div className="text-gray-600 tracking-wide font-medium text-xs uppercase mt-8 mx-5">
+                PINNED
+              </div>
+              <NoteCard key={pinnedNote._id} {...pinnedNote} />
+            </div>
+          ))}
+      </div>
+      <hr />
+      <div className="flex gap-5 flex-wrap my-4">
+        {notes?.notes
+          ?.filter((note: Note) =>
+            pathname === `/` ? !note.isArchived : note.isArchived
+          )
+          ?.filter((note: Note) => !note.isPinned)
+          ?.map((note: Note) => (
+            <NoteCard key={note._id} {...note} />
+          ))}
+      </div>
+    </>
   );
 };
 

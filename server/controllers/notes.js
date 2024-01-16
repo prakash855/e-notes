@@ -65,13 +65,21 @@ export const archiveNotes = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send(`No note with this ID`);
   try {
-    const note = await Note.findByIdAndUpdate(
+    const note = await Note.findById(_id);
+    if (!note) {
+      return res.status(404).send(`No note with this ID`);
+    }
+    const updatedNote = await Note.findByIdAndUpdate(
       _id,
-      { isArchived: true },
+      { isArchived: !note.isArchived },
       { new: true }
     );
-    res.json(note);
+    if (!updatedNote) {
+      return res.status(404).send(`Failed to update note`);
+    }
+    res.json(updatedNote);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error in archiveNotes:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

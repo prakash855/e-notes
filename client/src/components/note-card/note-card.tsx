@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { BsPin, BsFillPinFill } from "react-icons/bs";
-import { IoArchiveOutline } from "react-icons/io5";
+import { IoArchiveOutline, IoArchive } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
 import styles from "./note-card.module.scss";
@@ -112,10 +112,17 @@ const NoteCard: FC = ({
                 {formatDate(createdAt)}
               </div>
               <Box className={getIconHoverClass(isHovered)}>
-                <IoArchiveOutline
-                  onClick={handleArchive}
-                  className={styles["icon-style"]}
-                />
+                {isArchived ? (
+                  <IoArchive
+                    onClick={handleArchive}
+                    className={styles["icon-style"]}
+                  />
+                ) : (
+                  <IoArchiveOutline
+                    onClick={handleArchive}
+                    className={styles["icon-style"]}
+                  />
+                )}
                 <MdDeleteOutline
                   onClick={handleDeleteNotes}
                   className={styles["icon-style"]}

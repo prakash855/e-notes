@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { BsPin, BsFillPinFill } from "react-icons/bs";
+import { BsPin } from "react-icons/bs";
 import { IoArchiveOutline, IoArchive } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 

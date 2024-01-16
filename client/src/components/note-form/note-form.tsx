@@ -4,6 +4,8 @@ import {
   FormControl,
   FormLabel,
   Input,
+  ModalCloseButton,
+  ModalHeader,
   Select,
   Textarea,
 } from "@chakra-ui/react";
@@ -90,6 +92,10 @@ const NoteForm: FC<NoteFormProps> = ({
 
   return (
     <>
+      <ModalHeader textAlign="center">
+        {editMode ? `Update` : `Create`} your note
+      </ModalHeader>
+      <ModalCloseButton />
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>Title</FormLabel>
@@ -129,7 +135,7 @@ const NoteForm: FC<NoteFormProps> = ({
         </FormControl>
 
         <Button type="submit" colorScheme="blue" mt={4}>
-          Add Note
+          {editMode ? `Update` : `Add Note`}
         </Button>
       </form>
     </>

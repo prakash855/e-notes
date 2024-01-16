@@ -19,92 +19,90 @@ const notesSlice = createSlice({
       .addCase(fetchNotes.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchNotes.fulfilled, (state, action) => {
+      .addCase(fetchNotes.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        state.notes = action.payload;
+        state.notes = payload;
       })
-      .addCase(fetchNotes.rejected, (state, action) => {
+      .addCase(fetchNotes.rejected, (state, { error: { message } }) => {
         state.status = "failed";
-        state.error = action.error.message ?? null;
+        state.error = message ?? null;
       })
 
       .addCase(fetchNotesById.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchNotesById.fulfilled, (state, action) => {
+      .addCase(fetchNotesById.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        state.selectedNote = action.payload;
+        state.selectedNote = payload;
       })
-      .addCase(fetchNotesById.rejected, (state, action) => {
+      .addCase(fetchNotesById.rejected, (state, { error: { message } }) => {
         state.status = "failed";
-        state.error = action.error.message ?? null;
+        state.error = message ?? null;
       })
 
       .addCase(createNotes.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(createNotes.fulfilled, (state, action) => {
+      .addCase(createNotes.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        state.notes.push(action.payload);
+        state.notes.push(payload);
       })
-      .addCase(createNotes.rejected, (state, action) => {
+      .addCase(createNotes.rejected, (state, { error: { message } }) => {
         state.status = "failed";
-        state.error = action.error.message ?? null;
+        state.error = message ?? null;
       })
 
       .addCase(deleteNotes.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(deleteNotes.fulfilled, (state, action) => {
+      .addCase(deleteNotes.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        state.notes = state.notes.filter((note) => note._id !== action.payload);
+        state.notes = state.notes.filter((note) => note._id !== payload);
       })
-      .addCase(deleteNotes.rejected, (state, action) => {
+      .addCase(deleteNotes.rejected, (state, { error: { message } }) => {
         state.status = "failed";
-        state.error = action.error.message ?? null;
+        state.error = message ?? null;
       })
 
       .addCase(updateNotes.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(updateNotes.fulfilled, (state, action) => {
+      .addCase(updateNotes.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
         state.notes = state.notes.map((note) =>
-          note._id === action.payload._id ? action.payload : note
+          note._id === payload._id ? payload : note
         );
       })
-      .addCase(updateNotes.rejected, (state, action) => {
+      .addCase(updateNotes.rejected, (state, { error: { message } }) => {
         state.status = "failed";
-        state.error = action.error.message ?? null;
+        state.error = message ?? null;
       })
 
       .addCase(archiveNoteById.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(archiveNoteById.fulfilled, (state, action) => {
+      .addCase(archiveNoteById.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        state.notes = state.notes.filter(
-          (note) => note._id !== action.payload._id
-        );
+        state.notes = state.notes.filter((note) => note._id !== payload._id);
       })
-      .addCase(archiveNoteById.rejected, (state, action) => {
+      .addCase(archiveNoteById.rejected, (state, { error: { message } }) => {
         state.status = "failed";
-        state.error = action.error.message ?? null;
+        state.error = message ?? null;
       })
 
       .addCase(pinNote.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(pinNote.fulfilled, (state, action) => {
+      .addCase(pinNote.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        const updatedNote = action.payload;
+        const updatedNote = payload;
         state.notes = state.notes.map((note) =>
           note._id === updatedNote._id ? updatedNote : note
         );
       })
-      .addCase(pinNote.rejected, (state, action) => {
+      .addCase(pinNote.rejected, (state, { error: { message } }) => {
         state.status = "failed";
-        state.error = action.error.message ?? null;
+        state.error = message ?? null;
       });
   },
 });

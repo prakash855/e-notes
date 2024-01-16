@@ -1,22 +1,26 @@
 import express from "express";
 import {
-  archiveNotes,
-  createNotes,
-  deleteNotes,
   getNotes,
-  getNotesById,
   pinNotes,
+  deleteNotes,
+  createNotes,
   updateNotes,
+  archiveNotes,
+  getNotesById,
 } from "../controllers/notes.js";
 
 const router = express.Router();
 
-router.get("/", getNotes);
-router.get("/:id", getNotesById);
-router.post("/", createNotes);
-router.delete("/:id", deleteNotes);
-router.patch("/:id", updateNotes);
-router.patch("/:id/archive", archiveNotes);
-router.patch("/:id/pin", pinNotes);
+const routes = [
+  { method: "get", path: "/", controller: getNotes },
+  { method: "post", path: "/", controller: createNotes },
+  { method: "get", path: "/:id", controller: getNotesById },
+  { method: "patch", path: "/:id", controller: updateNotes },
+  { method: "delete", path: "/:id", controller: deleteNotes },
+  { method: "patch", path: "/:id/pin", controller: pinNotes },
+  { method: "patch", path: "/:id/archive", controller: archiveNotes },
+];
+
+routes.map(({ method, path, controller }) => router[method](path, controller));
 
 export default router;

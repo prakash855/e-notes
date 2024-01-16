@@ -2,6 +2,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import "./App.css";
 import Header from "./components/header/header";
 import Body from "./sections/body";
+import Sidebar from "./sections/sidebar";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
         templateColumns="repeat(5, 1fr)"
         gap={4}
       >
-        <GridItem rowSpan={2} colSpan={1} bg="tomato" />
+        <GridItem rowSpan={2} colSpan={1} bg="grey">
+          <Sidebar />
+        </GridItem>
         <GridItem colSpan={4}>
           <Header />
         </GridItem>

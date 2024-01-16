@@ -18,6 +18,10 @@ const notesSchema = new Schema(
     backgroundColor: {
       type: String,
     },
+    isPinned: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

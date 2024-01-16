@@ -79,7 +79,33 @@ export const archiveNotes = async (req, res) => {
     }
     res.json(updatedNote);
   } catch (error) {
-    console.error("Error in archiveNotes:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const pinNotes = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No note with this ID`);
+  try {
+    const note = await Note.findById(id);
+    if (!note) return res.status(404).send(`No note with this ID`);
+
+    // If the note is already pinned, return an error or handle it as needed
+    if (note.isPinned) return res.status(404).send(`Note is already pinned`);
+
+    // Unpin any currently pinned notes
+    await Note.updateMany({ isPinned: true }, { isPinned: false });
+
+    // Pin the selected note
+    const updatedNote = await Note.findByIdAndDelete(
+      id,
+      { isPinned: true },
+      { new: true }
+    );
+    if (!updatedNote) return res.status(404).send(`Failed to update note`);
+    res.json(updatedNote);
+  } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

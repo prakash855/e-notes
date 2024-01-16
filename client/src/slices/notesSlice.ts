@@ -6,6 +6,7 @@ import {
   fetchNotes,
   fetchNotesById,
   initialState,
+  pinNote,
   updateNotes,
 } from "./services";
 
@@ -87,6 +88,21 @@ const notesSlice = createSlice({
         );
       })
       .addCase(archiveNoteById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? null;
+      })
+
+      .addCase(pinNote.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(pinNote.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const updatedNote = action.payload;
+        state.notes = state.notes.map((note) =>
+          note._id === updatedNote._id ? updatedNote : note
+        );
+      })
+      .addCase(pinNote.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message ?? null;
       });

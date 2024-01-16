@@ -19,7 +19,9 @@ import { getIconHoverClass } from "../../style";
 import {
   archiveNoteById,
   deleteNotes,
+  fetchNotes,
   Note,
+  pinNote,
   updateNotes,
 } from "../../slices/services";
 import { formatDate } from "../../utils";
@@ -59,6 +61,15 @@ const NoteCard: FC = ({
     }
   }, [dispatch, id]);
 
+  const handlePinned = useCallback(async () => {
+    if (id) {
+      const { payload } = await dispatch(pinNote(id));
+
+      // once pinned calling the notes list API again
+      if (payload) dispatch(fetchNotes());
+    } else return;
+  }, [id, dispatch]);
+
   const handleSubmit = useCallback(
     (data: Note) => {
       dispatch(updateNotes(data));
@@ -87,10 +98,7 @@ const NoteCard: FC = ({
       >
         <CardHeader className="flex justify-between items-center">
           <Heading size="md">{title}</Heading>
-          <div
-            onClick={() => console.log({ title })}
-            className={getIconHoverClass(isHovered)}
-          >
+          <div onClick={handlePinned} className={getIconHoverClass(isHovered)}>
             <BsPin className={styles["icon-style"]} />
           </div>
         </CardHeader>

@@ -16,12 +16,20 @@ export const Body = () => {
 
   return (
     <>
+      <div className="flex gap-5 flex-wrap my-4">
+        {notes?.notes
+          ?.filter((note: Note) => note.isPinned)
+          ?.map((note: Note) => (
+            <NoteCard key={note._id} {...note} />
+          ))}
+      </div>
       <hr />
       <div className="flex gap-5 flex-wrap my-4">
         {notes?.notes
           ?.filter((note: Note) =>
             pathname === `/` ? !note.isArchived : note.isArchived
           )
+          ?.filter((note: Note) => !note.isPinned)
           ?.map((note: Note) => (
             <NoteCard key={note._id} {...note} />
           ))}

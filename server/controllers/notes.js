@@ -98,7 +98,7 @@ export const pinNotes = async (req, res) => {
     await Note.updateMany({ isPinned: true }, { isPinned: false });
 
     // Pin the selected note
-    const updatedNote = await Note.findByIdAndDelete(
+    const updatedNote = await Note.findByIdAndUpdate(
       id,
       { isPinned: true },
       { new: true }

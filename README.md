@@ -1,6 +1,6 @@
 # e-Notes Project
 
-e-Notes is a note-taking application that provides users with the ability to create, read, update, and delete notes. It also includes features to archive notes and pin or unpin them for quick access. The project is built using Vite, React, TypeScript on the frontend, and Express, Node.js, and MongoDB on the backend. Chakra UI and Tailwind CSS are used for styling, and state management is handled through Redux Toolkit.
+e-Notes is a note-taking application that provides users with the ability to create, read, update, and delete notes. It also includes features to archive notes, pin or unpin them for quick access, and customize the background color of each note. The project is built using Vite, React, TypeScript on the frontend, and Express, Node.js, and MongoDB on the backend. Chakra UI and Tailwind CSS are used for styling, and state management is handled through Redux Toolkit.
 
 ## Features
 
@@ -15,6 +15,9 @@ e-Notes is a note-taking application that provides users with the ability to cre
 ### 3. Pin and Unpin Notes
 - Users can pin notes to have them prominently displayed for quick access.
 - Pinned notes can be easily unpinned.
+
+### 4. Customize Note Background Color
+- Each note allows users to customize its background color for personalization.
 
 ## Tech Stack
 

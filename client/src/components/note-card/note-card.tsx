@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { BsPin } from "react-icons/bs";
+import { BsPin, BsPinFill } from "react-icons/bs";
 import { IoArchiveOutline, IoArchive } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
@@ -34,6 +34,7 @@ const NoteCard: FC = ({
   _id: id,
   title,
   content,
+  isPinned,
   createdAt,
   isArchived,
   backgroundColor,
@@ -99,7 +100,11 @@ const NoteCard: FC = ({
         <CardHeader className="flex justify-between items-center">
           <Heading size="md">{title}</Heading>
           <div onClick={handlePinned} className={getIconHoverClass(isHovered)}>
-            <BsPin className={styles["icon-style"]} />
+            {isPinned ? (
+              <BsPinFill className={styles["icon-style"]} />
+            ) : (
+              <BsPin className={styles["icon-style"]} />
+            )}
           </div>
         </CardHeader>
 

@@ -48,16 +48,6 @@ const NoteCard: FC = ({
     } else console.log(`Invalid id`);
   }, [id, dispatch]);
 
-  const PinnedIcon = () => (
-    <div className={getIconHoverClass(isHovered)}>
-      {isArchived ? (
-        <BsFillPinFill className={styles["icon-style"]} />
-      ) : (
-        <BsPin className={styles["icon-style"]} />
-      )}
-    </div>
-  );
-
   const openUpdateModal = () => {
     setOpenEditModal(true);
     setEditMode(true);
@@ -97,7 +87,12 @@ const NoteCard: FC = ({
       >
         <CardHeader className="flex justify-between items-center">
           <Heading size="md">{title}</Heading>
-          <PinnedIcon />
+          <div
+            onClick={() => console.log({ title })}
+            className={getIconHoverClass(isHovered)}
+          >
+            <BsPin className={styles["icon-style"]} />
+          </div>
         </CardHeader>
 
         <CardBody className="flex flex-col justify-between">

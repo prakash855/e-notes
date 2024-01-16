@@ -8,7 +8,7 @@
 
     /* Bundler mode */
     "moduleResolution": "Node",
-    "allowImportingTsExtensions": true,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,

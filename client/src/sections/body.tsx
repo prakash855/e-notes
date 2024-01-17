@@ -17,12 +17,12 @@ export const Body = () => {
 
   return (
     <>
-      <CardVariant variant="PINNED" />
       <div className="flex gap-5 flex-wrap my-4">
         {notes?.notes
           ?.filter((note: Note) => note.isPinned)
           ?.map((pinnedNote: Note) => (
             <div>
+              <CardVariant variant="PINNED" />
               <NoteCard key={pinnedNote._id} {...pinnedNote} />
             </div>
           ))}

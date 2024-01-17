@@ -26,7 +26,7 @@ export const initialState: NotesState = {
   error: null,
 };
 
-const API = import.meta.env.VITE_APP_BASE_URL;
+const { VITE_APP_BASE_URL: API } = import.meta.env;
 
 export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
   const { data } = await axios(API);

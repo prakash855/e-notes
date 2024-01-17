@@ -9,17 +9,16 @@ function App() {
     <>
       <Grid
         h="100vh"
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
-        gap={4}
+        templateRows="10%"
+        templateColumns="20% 20% 20% 20% 20%" // Each column takes 20% of the total width
       >
-        <GridItem rowSpan={2} colSpan={1} bg="grey">
+        <GridItem rowSpan={2} colSpan={1} bg="ButtonShadow">
           <Sidebar />
         </GridItem>
-        <GridItem colSpan={4}>
+        <GridItem colSpan={4} className="mx-4">
           <Header />
         </GridItem>
-        <GridItem colSpan={4}>
+        <GridItem colSpan={4} className="mx-4">
           <Body />
         </GridItem>
       </Grid>

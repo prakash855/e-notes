@@ -22,8 +22,14 @@ const Header: FC = () => {
   };
 
   return (
-    <div className="flex justify-end m-5">
-      <Button onClick={() => setSubmitted(true)}>Create Note</Button>
+    <div className="flex justify-between m-5 border-b-2 py-2">
+      <img
+        className="w-10 h-10"
+        src="https://timingapp.com/cdn-cgi/image/format=auto,width=256/img/app-icons/com.apple.Notes/icon_128x128_2x.png"
+        alt=""
+      />
+      <Button onClick={() => setSubmitted(true)}>+ Create Note</Button>
+
       <CreateAndUpdateModal
         isOpen={submitted}
         onClose={() => setSubmitted(false)}

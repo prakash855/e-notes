@@ -19,6 +19,7 @@ const Sidebar: FC = () => {
 
   return (
     <>
+      <div className="m-8 font-extrabold">e-Notes</div>
       {sidebarConfig.map(({ icon, label, path }) => (
         <Link to={path || "/"} key={label}>
           <SidebarLink icon={icon} label={label} />

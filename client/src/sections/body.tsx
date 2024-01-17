@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NoteCard from "../components/note-card/note-card";
 import { fetchNotes, Note } from "../slices/services";
 import { AppDispatch, RootState } from "../store";
+import { CardVariant } from "../components/card-variant";
 
 export const Body = () => {
   const { pathname } = useLocation();
@@ -16,19 +17,18 @@ export const Body = () => {
 
   return (
     <>
+      <CardVariant variant="PINNED" />
       <div className="flex gap-5 flex-wrap my-4">
         {notes?.notes
           ?.filter((note: Note) => note.isPinned)
           ?.map((pinnedNote: Note) => (
             <div>
-              <div className="text-gray-600 tracking-wide font-medium text-xs uppercase mt-8 mx-5">
-                PINNED
-              </div>
               <NoteCard key={pinnedNote._id} {...pinnedNote} />
             </div>
           ))}
       </div>
-      <hr />
+
+      <CardVariant variant="OTHERS" />
       <div className="flex gap-5 flex-wrap my-4">
         {notes?.notes
           ?.filter((note: Note) =>

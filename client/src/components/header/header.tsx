@@ -24,7 +24,7 @@ const Header: FC = () => {
   return (
     <div className="flex justify-between m-5 border-b-2 py-2">
       <img
-        className="w-10 h-10"
+        className="w-10 h-10 cursor-pointer"
         src="https://timingapp.com/cdn-cgi/image/format=auto,width=256/img/app-icons/com.apple.Notes/icon_128x128_2x.png"
         alt=""
       />

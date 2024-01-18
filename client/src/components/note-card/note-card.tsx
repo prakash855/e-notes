@@ -87,7 +87,7 @@ const NoteCard: FC = ({
         setOpenEditModal(false);
       });
     },
-    [dispatchWithLoading]
+    [dispatch, dispatchWithLoading]
   );
 
   return (

@@ -9,7 +9,7 @@ import { CardVariant } from "../components/card-variant";
 export const Body = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
-  const { notes } = useSelector((state: RootState) => state);
+  const notes = useSelector((state: RootState) => state.notes);
 
   useEffect(() => {
     dispatch(fetchNotes());
@@ -21,7 +21,7 @@ export const Body = () => {
         {notes?.notes
           ?.filter((note: Note) => note.isPinned)
           ?.map((pinnedNote: Note) => (
-            <div>
+            <div key={pinnedNote._id}>
               <CardVariant variant="PINNED" />
               <NoteCard key={pinnedNote._id} {...pinnedNote} />
             </div>

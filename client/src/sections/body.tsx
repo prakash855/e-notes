@@ -1,19 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import NoteCard from "../components/note-card/note-card";
 import { fetchNotes, Note } from "../slices/services";
 import { AppDispatch, RootState } from "../store";
 import { CardVariant } from "../components/card-variant";
+import Loader from "../components/loader";
 
 export const Body = () => {
+  // Hooks
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const notes = useSelector((state: RootState) => state.notes);
 
+  // States
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
-    dispatch(fetchNotes());
+    (async () => {
+      try {
+        setIsLoading(true);
+        await dispatch(fetchNotes());
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, [dispatch, pathname]);
+
+  if (isLoading) return <Loader />;
 
   return (
     <>

@@ -29,6 +29,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
+import { useLoader } from "../use-loader";
+import Loader from "../loader";
 
 const NoteCard: FC = ({
   _id: id,
@@ -44,12 +46,7 @@ const NoteCard: FC = ({
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
-
-  const handleDeleteNotes = useCallback(() => {
-    if (id) {
-      dispatch(deleteNotes(id));
-    } else console.log(`Invalid id`);
-  }, [id, dispatch]);
+  const { loading, dispatchWithLoading } = useLoader();
 
   const openUpdateModal = () => {
     setOpenEditModal(true);
@@ -57,26 +54,40 @@ const NoteCard: FC = ({
   };
 
   const handleArchive = useCallback(() => {
-    if (id) {
-      dispatch(archiveNoteById(id));
-    }
-  }, [dispatch, id]);
+    dispatchWithLoading(async (dispatch) => {
+      if (id) {
+        await dispatch(archiveNoteById(id)); // assuming archiveNoteById is a Redux Toolkit thunk
+      }
+    });
+  }, [id, dispatchWithLoading]);
+
+  const handleDeleteNotes = useCallback(() => {
+    dispatchWithLoading(async (dispatch) => {
+      if (id) {
+        await dispatch(deleteNotes(id));
+      } else {
+        console.log(`Invalid id`);
+      }
+    });
+  }, [id, dispatchWithLoading]);
 
   const handlePinned = useCallback(async () => {
-    if (id) {
-      const { payload } = await dispatch(pinNote(id));
-
-      // once pinned calling the notes list API again
-      if (payload) dispatch(fetchNotes());
-    } else return;
-  }, [id, dispatch]);
+    await dispatchWithLoading(async (dispatch) => {
+      if (id) {
+        const { payload } = await dispatch(pinNote(id));
+        if (payload) dispatch(fetchNotes());
+      }
+    });
+  }, [id, dispatchWithLoading]);
 
   const handleSubmit = useCallback(
-    (data: Note) => {
-      dispatch(updateNotes(data));
-      setOpenEditModal(false);
+    async (data: Note) => {
+      await dispatchWithLoading(async () => {
+        await dispatch(updateNotes(data));
+        setOpenEditModal(false);
+      });
     },
-    [dispatch]
+    [dispatchWithLoading]
   );
 
   return (
@@ -144,6 +155,7 @@ const NoteCard: FC = ({
           </Stack>
         </CardBody>
       </Card>
+      {loading && <Loader />}
     </>
   );
 };

@@ -4,14 +4,10 @@ import Header from "./components/header/header";
 import Body from "./sections/body";
 import Sidebar from "./sections/sidebar";
 
-function App() {
+const App = () => {
   return (
     <>
-      <Grid
-        h="100vh"
-        templateRows="10%"
-        templateColumns="20% 20% 20% 20% 20%" // Each column takes 20% of the total width
-      >
+      <Grid h="100vh" templateRows="10%" templateColumns="20% 20% 20% 20% 20%">
         <GridItem rowSpan={2} colSpan={1} bg="ButtonShadow">
           <Sidebar />
         </GridItem>
@@ -24,6 +20,6 @@ function App() {
       </Grid>
     </>
   );
-}
+};
 
 export default App;

@@ -44,3 +44,5 @@ export const colorOptions = [
   { value: "yellow.100", label: "Very Light Yellow" },
   { value: "green.100", label: "Very Light Green" },
 ];
+
+export const notesPicture = `https://timingapp.com/cdn-cgi/image/format=auto,width=256/img/app-icons/com.apple.Notes/icon_128x128_2x.png`;

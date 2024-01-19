@@ -7,6 +7,7 @@ import { createNotes } from "../../slices/services";
 import { AppDispatch } from "../../store";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
+import { notesPicture } from "../../constants";
 
 const Header: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,11 +24,7 @@ const Header: FC = () => {
 
   return (
     <div className="flex justify-between m-5 border-b-2 py-2">
-      <img
-        className="w-10 h-10 cursor-pointer"
-        src="https://timingapp.com/cdn-cgi/image/format=auto,width=256/img/app-icons/com.apple.Notes/icon_128x128_2x.png"
-        alt=""
-      />
+      <img className="w-10 h-10 cursor-pointer" src={notesPicture} alt="" />
       <Button onClick={() => setSubmitted(true)}>+ Create Note</Button>
 
       <CreateAndUpdateModal

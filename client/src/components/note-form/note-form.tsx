@@ -7,6 +7,7 @@ import {
   ModalCloseButton,
   ModalHeader,
   Select,
+  useToast,
   Textarea,
 } from "@chakra-ui/react";
 import { colorOptions } from "../../constants";
@@ -37,6 +38,7 @@ const NoteForm: FC<NoteFormProps> = ({
     backgroundColor: initialData?.backgroundColor || "",
   });
   const dispatch = useDispatch<AppDispatch>();
+  const toast = useToast();
 
   const handleSelectChange = useCallback(
     (event: { target: { value: SetStateAction<string> } }) => {
@@ -58,8 +60,16 @@ const NoteForm: FC<NoteFormProps> = ({
     (e: { preventDefault: () => void }) => {
       e.preventDefault();
       onSubmit(notesState);
+      toast({
+        title: `Note ${editMode ? `Updated` : `Created`}`,
+        description: `Your note has been successfully ${
+          editMode ? `Updated` : `Created`
+        }.`,
+        status: "success",
+        position: "top-right",
+      });
     },
-    [notesState, onSubmit]
+    [editMode, toast, notesState, onSubmit]
   );
 
   useEffect(() => {

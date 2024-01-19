@@ -8,6 +8,7 @@ import {
   Stack,
   Box,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 
 import { BsPin, BsPinFill } from "react-icons/bs";
@@ -46,6 +47,7 @@ const NoteCard: FC = ({
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
+  const toast = useToast();
   const { loading, dispatchWithLoading } = useLoader();
 
   const openUpdateModal = () => {
@@ -56,29 +58,53 @@ const NoteCard: FC = ({
   const handleArchive = useCallback(() => {
     dispatchWithLoading(async (dispatch) => {
       if (id) {
-        await dispatch(archiveNoteById(id)); // assuming archiveNoteById is a Redux Toolkit thunk
+        await dispatch(archiveNoteById(id));
+        toast({
+          title: `Note ${isArchived ? `Unarchived` : `Archived`}`,
+          description: `Your note has been successfully ${
+            isArchived ? `unarchived` : `archived`
+          }.`,
+          status: "success",
+          position: "top-right",
+        });
       }
     });
-  }, [id, dispatchWithLoading]);
+  }, [id, toast, isArchived, dispatchWithLoading]);
 
   const handleDeleteNotes = useCallback(() => {
     dispatchWithLoading(async (dispatch) => {
       if (id) {
         await dispatch(deleteNotes(id));
+        toast({
+          title: `Note Delted`,
+          description: `Your note has been successfully deleted.`,
+          status: "success",
+          position: "top-right",
+        });
       } else {
         console.log(`Invalid id`);
       }
     });
-  }, [id, dispatchWithLoading]);
+  }, [id, toast, dispatchWithLoading]);
 
   const handlePinned = useCallback(async () => {
     await dispatchWithLoading(async (dispatch) => {
       if (id) {
         const { payload } = await dispatch(pinNote(id));
-        if (payload) dispatch(fetchNotes());
+        if (payload) {
+          dispatch(fetchNotes());
+          toast({
+            title: `Note ${isPinned ? `Uninned` : `Pinned`}`,
+            description: `Your note has been successfully ${
+              isPinned ? `unpinned` : `pinned`
+            }.`,
+            status: "success",
+            position: "top-right",
+          });
+        }
       }
     });
-  }, [id, dispatchWithLoading]);
+  }, [id, toast, isPinned, dispatchWithLoading]);
 
   const handleSubmit = useCallback(
     async (data: Note) => {

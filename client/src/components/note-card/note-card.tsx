@@ -76,7 +76,7 @@ const NoteCard: FC = ({
       if (id) {
         await dispatch(deleteNotes(id));
         toast({
-          title: `Note Delted`,
+          title: `Note Deleted`,
           description: `Your note has been successfully deleted.`,
           status: "success",
           position: "top-right",

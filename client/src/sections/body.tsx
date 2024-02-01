@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { BsPinFill } from "react-icons/bs";
 
 import NoteCard from "../components/note-card/note-card";
 import { fetchNotes, Note } from "../slices/services";
 import { AppDispatch, RootState } from "../store";
 import { CardVariant } from "../components/card-variant";
 import Loader from "../components/loader";
+import styles from "../components/note-card/note-card.module.scss";
 
 export const Body = () => {
   // Hooks
@@ -37,7 +39,13 @@ export const Body = () => {
           ?.filter((note: Note) => note.isPinned)
           ?.map((pinnedNote: Note) => (
             <div key={pinnedNote._id}>
-              <CardVariant variant="PINNED" />
+              <div className="flex items-end">
+                <BsPinFill
+                  style={{ fontSize: 13 }}
+                  className={`${styles["icon-style"]} relative left-4`}
+                />
+                <CardVariant variant="PINNED" />
+              </div>
               <NoteCard key={pinnedNote._id} {...pinnedNote} />
             </div>
           ))}

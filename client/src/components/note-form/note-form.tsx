@@ -43,7 +43,7 @@ const NoteForm: FC<NoteFormProps> = ({
   const handleSelectChange = useCallback(
     (event: { target: { value: SetStateAction<string> } }) => {
       const selectedOption = colorOptions.find(
-        (option) => option.value === event.target.value
+        ({ value }) => value === event.target.value
       );
 
       if (selectedOption) {
@@ -136,9 +136,9 @@ const NoteForm: FC<NoteFormProps> = ({
             onChange={handleSelectChange}
             placeholder="Select option"
           >
-            {colorOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {colorOptions.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
               </option>
             ))}
           </Select>

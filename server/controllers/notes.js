@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Note } from "../models/notes.js";
+import { unknowNoteHandler } from "../utils.js";
 
 export const getNotes = async (_, res) => {
   try {
@@ -11,9 +12,7 @@ export const getNotes = async (_, res) => {
 };
 
 export const getNotesById = async ({ params: { id } }, res) => {
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No note with this ID`);
-
+  unknowNoteHandler(id);
   try {
     const note = await Note.findById(id);
 
@@ -38,8 +37,7 @@ export const createNotes = async ({ body }, res) => {
 };
 
 export const deleteNotes = async ({ params: { id } }, res) => {
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with this ID`);
+  unknowNoteHandler(id);
   await Note.findByIdAndDelete(id);
   res.json({ message: `Notes deleted successfully!` });
 };
@@ -47,8 +45,7 @@ export const deleteNotes = async ({ params: { id } }, res) => {
 export const updateNotes = async ({ params }, res) => {
   const { id: _id } = params;
   const notes = req.body;
-  if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send(`No post with this ID`);
+  unknowNoteHandler(_id);
   const updatedNotes = await Note.findByIdAndUpdate(
     _id,
     { ...notes, _id },
@@ -59,8 +56,7 @@ export const updateNotes = async ({ params }, res) => {
 
 export const archiveNotes = async ({ params }, res) => {
   const { id: _id } = params;
-  if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send(`No note with this ID`);
+  unknowNoteHandler(_id);
   try {
     const note = await Note.findById(_id);
     if (!note) {
@@ -81,8 +77,7 @@ export const archiveNotes = async ({ params }, res) => {
 };
 
 export const pinNotes = async ({ params: { id } }, res) => {
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No note with this ID`);
+  unknowNoteHandler(id);
   try {
     const note = await Note.findById(id);
     if (!note) return res.status(404).send(`No note with this ID`);

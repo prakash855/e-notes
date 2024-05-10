@@ -1,18 +1,16 @@
 import mongoose from "mongoose";
 import { Note } from "../models/notes.js";
 
-export const getNotes = async (req, res) => {
+export const getNotes = async (_, res) => {
   try {
     const Notes = await Note.find();
     res.status(200).json(Notes);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
+  } catch ({ message }) {
+    res.status(404).json({ message });
   }
 };
 
-export const getNotesById = async (req, res) => {
-  const { id } = req.params;
-
+export const getNotesById = async ({ params: { id } }, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No note with this ID`);
 
@@ -23,13 +21,13 @@ export const getNotesById = async (req, res) => {
       return res.status(404).json({ message: "Note not found" });
     }
     res.status(200).json(note);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch ({ message }) {
+    res.status(500).json({ message });
   }
 };
 
-export const createNotes = async (req, res) => {
-  const note = req.body;
+export const createNotes = async ({ body }, res) => {
+  const note = body;
   const newNote = new Note(note);
   try {
     await newNote.save();
@@ -39,16 +37,15 @@ export const createNotes = async (req, res) => {
   }
 };
 
-export const deleteNotes = async (req, res) => {
-  const { id } = req.params;
+export const deleteNotes = async ({ params: { id } }, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with this ID`);
   await Note.findByIdAndDelete(id);
   res.json({ message: `Notes deleted successfully!` });
 };
 
-export const updateNotes = async (req, res) => {
-  const { id: _id } = req.params;
+export const updateNotes = async ({ params }, res) => {
+  const { id: _id } = params;
   const notes = req.body;
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send(`No post with this ID`);
@@ -60,8 +57,8 @@ export const updateNotes = async (req, res) => {
   res.json(updatedNotes);
 };
 
-export const archiveNotes = async (req, res) => {
-  const { id: _id } = req.params;
+export const archiveNotes = async ({ params }, res) => {
+  const { id: _id } = params;
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send(`No note with this ID`);
   try {
@@ -83,8 +80,7 @@ export const archiveNotes = async (req, res) => {
   }
 };
 
-export const pinNotes = async (req, res) => {
-  const { id } = req.params;
+export const pinNotes = async ({ params: { id } }, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No note with this ID`);
   try {

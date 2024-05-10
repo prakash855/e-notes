@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { Note } from "../models/notes.js";
 import { unknowNoteHandler } from "../utils.js";
 

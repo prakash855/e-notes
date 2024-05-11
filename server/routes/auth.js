@@ -58,9 +58,7 @@ router.post(
   }
 );
 
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
+router.post("/login", async ({ body: { email, password } }, res) => {
   try {
     // Find the user by email
     const user = await User.findOne({ email });
@@ -92,7 +90,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/logout", (req, res) => {
+router.post("/logout", (_, res) => {
   // You may want to perform additional cleanup or actions upon logout
   // For example, destroying the session, clearing user-related data, etc.
 

@@ -46,3 +46,9 @@ export const colorOptions = [
 ];
 
 export const notesPicture = `https://timingapp.com/cdn-cgi/image/format=auto,width=256/img/app-icons/com.apple.Notes/icon_128x128_2x.png`;
+
+export const firstName = "firstName";
+export const lastName = "lastName";
+export const email = "email";
+export const password = "password";
+export const confirmPassword = "confirmPassword";

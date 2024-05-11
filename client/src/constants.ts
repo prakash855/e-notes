@@ -1,3 +1,5 @@
+import { loginInitalValueType, signupInitalValueType } from "./types";
+
 export const colorOptions = [
   { value: "gray.500", label: "Gray" },
   { value: "red.500", label: "Red" },
@@ -52,3 +54,16 @@ export const lastName = "lastName";
 export const email = "email";
 export const password = "password";
 export const confirmPassword = "confirmPassword";
+
+export const signupInitialValues: signupInitalValueType = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
+export const loginInitialValues: loginInitalValueType = {
+  email: "",
+  password: "",
+};

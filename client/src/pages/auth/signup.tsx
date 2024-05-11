@@ -6,23 +6,15 @@ import {
   firstName,
   lastName,
   password,
+  signupInitialValues as initialValues,
 } from "../../constants";
 import { TextError } from "./text-error";
 
 import "./auth.css";
-
-import { initalValueType } from "../../types";
+import { signupInitalValueType } from "../../types";
 
 const Signup = () => {
-  const initialValues: initalValueType = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  };
-
-  const onSubmit = (values: initalValueType) => {
+  const onSubmit = (values: signupInitalValueType) => {
     console.log(values);
   };
 

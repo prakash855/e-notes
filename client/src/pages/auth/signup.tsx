@@ -1,5 +1,5 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
+import { Formik, ErrorMessage, Field, Form, Yup, Button } from "../../lib";
+
 import {
   confirmPassword,
   email,
@@ -12,7 +12,6 @@ import { TextError } from "./text-error";
 import "./auth.css";
 
 import { initalValueType } from "../../types";
-import { Button } from "@chakra-ui/react";
 
 const Signup = () => {
   const initialValues: initalValueType = {

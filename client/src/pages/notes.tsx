@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import NoteCard from "../components/note-card/note-card";
-import { fetchNotes, Note } from "../services";
+import { fetchNotes } from "../services";
 import { AppDispatch, RootState } from "../store";
 import { CardVariant } from "../components/card-variant";
 import Loader from "../components/loader";
-import { NotePageType } from "../types";
+import { Note, NotePageType } from "../types";
 
 export const Notes = ({ isArchivedPage }: NotePageType) => {
   // Hooks

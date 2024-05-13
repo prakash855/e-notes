@@ -12,6 +12,7 @@ import { TextError } from "./text-error";
 
 import "./auth.css";
 import { signupInitalValueType } from "../../types";
+import { AuthButton } from "../../components/auth-button";
 
 const Signup = () => {
   const onSubmit = (values: signupInitalValueType) => {
@@ -66,6 +67,7 @@ const Signup = () => {
         <Button type="submit" colorScheme="teal" size="md">
           Signup
         </Button>
+        <AuthButton lable="Already have an account?" path="/login" />
       </Form>
     </Formik>
   );

@@ -1,3 +1,4 @@
+import { AuthButton } from "../../components/auth-button";
 import {
   email,
   loginInitialValues as initialValues,
@@ -37,6 +38,7 @@ const Login = () => {
         <Button type="submit" colorScheme="teal" size="md">
           Login
         </Button>
+        <AuthButton lable="Don't have an account?" path="/signup" />
       </Form>
     </Formik>
   );

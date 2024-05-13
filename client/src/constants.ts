@@ -1,3 +1,4 @@
+import { Yup } from "../src/lib";
 import { loginInitalValueType, signupInitalValueType } from "./types";
 
 export const colorOptions = [
@@ -67,3 +68,16 @@ export const loginInitialValues: loginInitalValueType = {
   email: "",
   password: "",
 };
+
+export const signupValidationSchema = Yup.object({
+  firstName: Yup.string().required(),
+  lastName: Yup.string().required(),
+  email: Yup.string().email(`Invalid email format`).required(),
+  password: Yup.string().required(),
+  confirmPassword: Yup.string().required(),
+});
+
+export const loginValidationSchema = Yup.object({
+  email: Yup.string().email(`Invalid email format`).required(),
+  password: Yup.string().required(),
+});

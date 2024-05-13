@@ -2,6 +2,7 @@ import { AuthButton } from "../../components/auth-button";
 import {
   email,
   loginInitialValues as initialValues,
+  loginValidationSchema as validationSchema,
   password,
 } from "../../constants";
 import { Formik, ErrorMessage, Field, Form, Yup, Button } from "../../lib";
@@ -9,11 +10,6 @@ import { loginInitalValueType } from "../../types";
 import { TextError } from "./text-error";
 
 const onSubmit = (values: loginInitalValueType) => console.log(values);
-
-const validationSchema = Yup.object({
-  email: Yup.string().email(`Invalid email format`).required(),
-  password: Yup.string().required(),
-});
 
 const Login = () => {
   return (

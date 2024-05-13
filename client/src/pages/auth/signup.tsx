@@ -1,4 +1,4 @@
-import { Formik, ErrorMessage, Field, Form, Yup, Button } from "../../lib";
+import { Formik, ErrorMessage, Field, Form, Button } from "../../lib";
 
 import {
   confirmPassword,
@@ -7,6 +7,7 @@ import {
   lastName,
   password,
   signupInitialValues as initialValues,
+  signupValidationSchema as validationSchema,
 } from "../../constants";
 import { TextError } from "./text-error";
 
@@ -18,14 +19,6 @@ const Signup = () => {
   const onSubmit = (values: signupInitalValueType) => {
     console.log(values);
   };
-
-  const validationSchema = Yup.object({
-    firstName: Yup.string().required(),
-    lastName: Yup.string().required(),
-    email: Yup.string().email(`Invalid email format`).required(),
-    password: Yup.string().required(),
-    confirmPassword: Yup.string().required(),
-  });
 
   return (
     <Formik

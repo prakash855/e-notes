@@ -12,7 +12,6 @@ import { TextError } from "./text-error";
 
 import "./auth.css";
 import { signupInitalValueType } from "../../types";
-import { Link } from "react-router-dom";
 import { AuthButton } from "../../components/auth-button";
 
 const Signup = () => {

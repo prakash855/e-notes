@@ -73,8 +73,15 @@ export const signupValidationSchema = Yup.object({
   firstName: Yup.string().required(),
   lastName: Yup.string().required(),
   email: Yup.string().email(`Invalid email format`).required(),
-  password: Yup.string().required(),
-  confirmPassword: Yup.string().required(),
+  password: Yup.string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters long"),
+  confirmPassword: Yup.string()
+    .required("Confirm password is required")
+    .min(6, "Password must be at least 6 characters long")
+    .test("passwords-match", "Passwords must match", function (value) {
+      return this.parent.password === value;
+    }),
 });
 
 export const loginValidationSchema = Yup.object({

@@ -1,3 +1,21 @@
+export interface Note {
+  _id?: string;
+  title?: string;
+  content?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isArchived?: boolean;
+  isPinned?: boolean;
+  backgroundColor?: string;
+}
+
+export interface NotesState {
+  notes: Note[];
+  selectedNote: Note | null;
+  status: "idle" | "loading" | "succeeded" | "failed";
+  error: string | null;
+}
+
 export type signupInitalValueType = {
   firstName: string;
   lastName: string;

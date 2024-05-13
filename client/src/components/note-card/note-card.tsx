@@ -24,7 +24,7 @@ import {
   Note,
   pinNote,
   updateNotes,
-} from "../../slices/services";
+} from "../../services";
 import { formatDate } from "../../utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";

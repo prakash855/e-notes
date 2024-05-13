@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { notesInitialState as initialState } from "../constants";
 import {
   archiveNoteById,
   createNotes,
   deleteNotes,
   fetchNotes,
   fetchNotesById,
-  initialState,
   pinNote,
   updateNotes,
-} from "./services";
+} from "../services";
 
 const notesSlice = createSlice({
   name: "notes",

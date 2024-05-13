@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { Button } from "@chakra-ui/react";
 
-import { createNotes } from "../../slices/services";
+import { createNotes } from "../../services";
 import { AppDispatch } from "../../store";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";

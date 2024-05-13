@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { colorOptions } from "../../constants";
 import { useDispatch } from "react-redux";
-import { fetchNotesById } from "../../slices/services";
+import { fetchNotesById } from "../../services";
 import { AppDispatch } from "../../store";
 
 interface NoteFormProps {

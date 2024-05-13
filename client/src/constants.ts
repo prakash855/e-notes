@@ -1,5 +1,9 @@
 import { Yup } from "../src/lib";
-import { loginInitalValueType, signupInitalValueType } from "./types";
+import {
+  loginInitalValueType,
+  NotesState,
+  signupInitalValueType,
+} from "./types";
 
 export const colorOptions = [
   { value: "gray.500", label: "Gray" },
@@ -56,6 +60,7 @@ export const email = "email";
 export const password = "password";
 export const confirmPassword = "confirmPassword";
 
+//Auth
 export const signupInitialValues: signupInitalValueType = {
   firstName: "",
   lastName: "",
@@ -88,3 +93,12 @@ export const loginValidationSchema = Yup.object({
   email: Yup.string().email(`Invalid email format`).required(),
   password: Yup.string().required(),
 });
+
+// Notes
+
+export const notesInitialState: NotesState = {
+  notes: [],
+  status: "idle",
+  selectedNote: null,
+  error: null,
+};

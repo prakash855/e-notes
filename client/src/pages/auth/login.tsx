@@ -5,7 +5,7 @@ import {
   loginValidationSchema as validationSchema,
   password,
 } from "../../constants";
-import { Formik, ErrorMessage, Field, Form, Yup, Button } from "../../lib";
+import { Formik, ErrorMessage, Field, Form, Button } from "../../lib";
 import { loginInitalValueType } from "../../types";
 import { TextError } from "./text-error";
 

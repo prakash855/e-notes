@@ -14,10 +14,11 @@ import { TextError } from "./text-error";
 import "./auth.css";
 import { signupInitalValueType } from "../../types";
 import { AuthButton } from "../../components/auth-button";
+import { signup } from "../../services";
 
 const Signup = () => {
   const onSubmit = (values: signupInitalValueType) => {
-    console.log(values);
+    signup(values);
   };
 
   return (
@@ -41,19 +42,19 @@ const Signup = () => {
 
         <div className="form-control">
           <label htmlFor={email}>Email</label>
-          <Field type="text" id={email} name={email} />
+          <Field type="email" id={email} name={email} />
           <ErrorMessage name={email} component={TextError} />
         </div>
 
         <div className="form-control">
           <label htmlFor={password}>Password</label>
-          <Field type="text" id={password} name={password} />
+          <Field type="password" id={password} name={password} />
           <ErrorMessage name={password} component={TextError} />
         </div>
 
         <div className="form-control">
           <label htmlFor={confirmPassword}>Confirm Password</label>
-          <Field type="text" id={confirmPassword} name={confirmPassword} />
+          <Field type="password" id={confirmPassword} name={confirmPassword} />
           <ErrorMessage name={confirmPassword} component={TextError} />
         </div>
 

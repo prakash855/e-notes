@@ -11,6 +11,7 @@ label {
 
 input[type="text"],
 input[type="email"],
+input[type="password"],
 textarea {
   display: block;
   width: 400px;
@@ -22,6 +23,7 @@ textarea {
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
+  outline: none;
   /* margin-bottom: 20px; */
 }
 

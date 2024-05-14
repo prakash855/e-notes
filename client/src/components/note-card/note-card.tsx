@@ -21,7 +21,6 @@ import {
   archiveNoteById,
   deleteNotes,
   fetchNotes,
-  Note,
   pinNote,
   updateNotes,
 } from "../../services";
@@ -32,6 +31,7 @@ import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
 import { useLoader } from "../use-loader";
 import Loader from "../loader";
+import { Note } from "../../types";
 
 const NoteCard: FC = ({
   _id: id,

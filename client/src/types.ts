@@ -39,3 +39,10 @@ export type AuthButtonType = {
   lable: string;
   path: string;
 };
+
+export type authStateType = {
+  user?: null | undefined;
+  isLoggedIn: boolean;
+  status?: "idle" | "loading" | "succeeded" | "failed";
+  error?: string | null | undefined;
+};

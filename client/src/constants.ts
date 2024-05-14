@@ -1,5 +1,6 @@
 import { Yup } from "../src/lib";
 import {
+  authStateType,
   loginInitalValueType,
   NotesState,
   signupInitalValueType,
@@ -93,6 +94,13 @@ export const loginValidationSchema = Yup.object({
   email: Yup.string().email(`Invalid email format`).required(),
   password: Yup.string().required(),
 });
+
+export const authState: authStateType = {
+  user: null,
+  isLoggedIn: false,
+  status: "idle",
+  error: null,
+};
 
 // Notes
 

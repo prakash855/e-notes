@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import { AuthButton } from "../../components/auth-button";
 import {
   email,
@@ -6,12 +7,14 @@ import {
   password,
 } from "../../constants";
 import { Formik, ErrorMessage, Field, Form, Button } from "../../lib";
+import { login } from "../../services";
+import { AppDispatch } from "../../store";
 import { loginInitalValueType } from "../../types";
 import { TextError } from "./text-error";
 
-const onSubmit = (values: loginInitalValueType) => console.log(values);
-
 const Login = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const onSubmit = (values: loginInitalValueType) => dispatch(login(values));
   return (
     <Formik
       initialValues={initialValues}

@@ -41,9 +41,9 @@ export const deleteNotes = async ({ params: { id } }, res) => {
   res.json({ message: `Notes deleted successfully!` });
 };
 
-export const updateNotes = async ({ params }, res) => {
+export const updateNotes = async ({ params, body }, res) => {
   const { id: _id } = params;
-  const notes = req.body;
+  const notes = body;
   unknowNoteHandler(_id, res);
   const updatedNotes = await Note.findByIdAndUpdate(
     _id,

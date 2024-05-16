@@ -1,19 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { authAPI, notesAPI } from "../constants";
 import { loginInitalValueType, Note, signupInitalValueType } from "../types";
-
-const { VITE_APP_BASE_URL: API } = import.meta.env;
 
 // Notes Services
 export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
-  const { data } = await axios(API);
+  const { data } = await axios(notesAPI);
   return data;
 });
 
 export const fetchNotesById = createAsyncThunk(
   "notes/fetchNotesById",
   async (_id: string) => {
-    const { data } = await axios(`${API}/${_id}`);
+    const { data } = await axios(`${notesAPI}/${_id}`);
     return data;
   }
 );
@@ -21,7 +20,7 @@ export const fetchNotesById = createAsyncThunk(
 export const createNotes = createAsyncThunk(
   "notes/createNotes",
   async (newNote: Note) => {
-    const { data } = await axios.post(API, newNote);
+    const { data } = await axios.post(notesAPI, newNote);
     return data;
   }
 );
@@ -29,7 +28,7 @@ export const createNotes = createAsyncThunk(
 export const deleteNotes = createAsyncThunk(
   "notes/deleteNotes",
   async (_id: string) => {
-    await axios.delete(`${API}/${_id}`);
+    await axios.delete(`${notesAPI}/${_id}`);
     return _id;
   }
 );
@@ -38,7 +37,7 @@ export const updateNotes = createAsyncThunk(
   "notes/updatedNotes",
   async (updatedNote: Note) => {
     const { data } = await axios.patch(
-      `${API}/${updatedNote._id}`,
+      `${notesAPI}/${updatedNote._id}`,
       updatedNote
     );
     return data;
@@ -48,13 +47,13 @@ export const updateNotes = createAsyncThunk(
 export const archiveNoteById = createAsyncThunk(
   "notes/archiveNotes",
   async (_id: string) => {
-    const { data } = await axios.patch(`${API}/${_id}/archive`);
+    const { data } = await axios.patch(`${notesAPI}/${_id}/archive`);
     return data;
   }
 );
 
 export const pinNote = createAsyncThunk("notes/pinNote", async (id: string) => {
-  const { data } = await axios.patch(`${API}/${id}/pin`);
+  const { data } = await axios.patch(`${notesAPI}/${id}/pin`);
   return data;
 });
 
@@ -62,19 +61,32 @@ export const pinNote = createAsyncThunk("notes/pinNote", async (id: string) => {
 export const signup = createAsyncThunk(
   "auth/signup",
   async (
-    { firstName, lastName, email, password }: signupInitalValueType,
+    {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    }: signupInitalValueType,
     { rejectWithValue }
   ) => {
     try {
-      const response: AxiosResponse = await axios.post(`${API}/signup`, {
+      if (password !== confirmPassword) {
+        throw new Error("Passwords do not match");
+      }
+
+      const response: AxiosResponse = await axios.post(`${authAPI}/signup`, {
         firstName,
         lastName,
         email,
         password,
+        confirmPassword,
       });
+
       if (response.status !== 200) {
         throw new Error("Failed to signup");
       }
+
       return response.data;
     } catch (error) {
       if ((error as AxiosError).response) {
@@ -95,7 +107,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }: loginInitalValueType, { rejectWithValue }) => {
     try {
-      const response: AxiosResponse = await axios.post(`${API}/login`, {
+      const response: AxiosResponse = await axios.post(`${authAPI}/login`, {
         email,
         password,
       });

@@ -15,10 +15,14 @@ import "./auth.css";
 import { signupInitalValueType } from "../../types";
 import { AuthButton } from "../../components/auth-button";
 import { signup } from "../../services";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
 
 const Signup = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const onSubmit = (values: signupInitalValueType) => {
-    signup(values);
+    console.log(values);
+    dispatch(signup(values));
   };
 
   return (

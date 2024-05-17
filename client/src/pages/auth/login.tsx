@@ -1,4 +1,5 @@
-import { useDispatch } from "react-redux";
+import { useToast } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthButton } from "../../components/auth-button";
 import {
   email,
@@ -8,13 +9,56 @@ import {
 } from "../../constants";
 import { Formik, ErrorMessage, Field, Form, Button } from "../../lib";
 import { login } from "../../services";
-import { AppDispatch } from "../../store";
+import { useLoader } from "../../components/use-loader";
+import { AppDispatch, RootState } from "../../store";
 import { loginInitalValueType } from "../../types";
 import { TextError } from "./text-error";
+import { SubmitButton } from "../../components/submit-button";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const onSubmit = (values: loginInitalValueType) => dispatch(login(values));
+  const navigate = useNavigate();
+  const { loading, dispatchWithLoading } = useLoader();
+  const { isLoggedIn, status, user, error } = useSelector(
+    ({ auth }: RootState) => auth
+  );
+  const toast = useToast();
+
+  const onSubmit = useCallback(
+    async (values: loginInitalValueType) => {
+      await dispatchWithLoading(async () => {
+        const resultAction = await dispatch(login(values));
+        if (login.fulfilled.match(resultAction)) {
+          const user = resultAction.payload;
+
+          toast({
+            title: "Success",
+            description: user.message,
+            status: "success",
+            position: "top-right",
+          });
+
+          if (user.token) {
+            localStorage.setItem("token", user.token);
+            navigate("/");
+            console.log("success", resultAction);
+          } else {
+            console.log("error", resultAction);
+            toast({
+              title: "Error",
+              description: resultAction.payload.message,
+              status: "error",
+              position: "top-right",
+            });
+          }
+        }
+      });
+    },
+    [dispatch, dispatchWithLoading, isLoggedIn, status, user]
+  );
+
   return (
     <Formik
       initialValues={initialValues}
@@ -33,10 +77,11 @@ const Login = () => {
           <Field type="text" id={password} name={password} />
           <ErrorMessage name={password} component={TextError} />
         </div>
-
-        <Button type="submit" colorScheme="teal" size="md">
-          Login
-        </Button>
+        <SubmitButton
+          isLoading={loading}
+          loadingText="Logging in"
+          authType="Login"
+        />
         <AuthButton lable="Don't have an account?" path="/signup" />
       </Form>
     </Formik>

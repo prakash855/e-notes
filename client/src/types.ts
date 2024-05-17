@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 // Notes
 export interface Note {
   _id?: string;
@@ -40,9 +42,24 @@ export type AuthButtonType = {
   path: string;
 };
 
+export type User = {
+  message?: string | undefined;
+  token?: string | undefined;
+};
+
 export type authStateType = {
-  user?: null | undefined;
+  user?: User;
   isLoggedIn: boolean;
   status?: "idle" | "loading" | "succeeded" | "failed";
   error?: string | null | undefined;
+};
+
+export type SubmitButtonType = {
+  isLoading: boolean;
+  loadingText: string;
+  authType: string;
+};
+
+export type PrivateRouteProps = {
+  children: ReactNode;
 };

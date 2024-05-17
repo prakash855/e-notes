@@ -45,7 +45,7 @@ export const signup = async (
       }
     );
 
-    res.status(201).json({ token });
+    res.status(201).json({ token, message: "Signup successful!" });
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -77,7 +77,7 @@ export const login = async ({ body: { email, password } }, res) => {
       }
     );
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, message: "Loggedin Successfully!" });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal Server Error" });

@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./App.css";
 import Header from "./components/header/header";
+import { PrivateRoute } from "./components/private-route";
 import Login from "./pages/auth/login";
 import SignupForm from "./pages/auth/signup";
 import { Notes } from "./pages/notes";
@@ -27,8 +28,22 @@ const App = () => {
         )}
         <GridItem colSpan={4} className="mx-4">
           <Routes>
-            <Route path="/" element={<Notes />} />
-            <Route path="/archive" element={<Notes isArchivedPage={true} />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Notes />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/archive"
+              element={
+                <PrivateRoute>
+                  <Notes isArchivedPage={true} />
+                </PrivateRoute>
+              }
+            />
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/login" element={<Login />} />
           </Routes>

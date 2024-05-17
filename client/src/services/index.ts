@@ -105,12 +105,12 @@ export const signup = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ email, password }: loginInitalValueType, { rejectWithValue }) => {
+  async (credential: loginInitalValueType, { rejectWithValue }) => {
     try {
-      const response: AxiosResponse = await axios.post(`${authAPI}/login`, {
-        email,
-        password,
-      });
+      const response: AxiosResponse = await axios.post(
+        `${authAPI}/login`,
+        credential
+      );
       if (response.status !== 200) {
         throw new Error(`Failed to login`);
       }

@@ -15,15 +15,27 @@ import "./auth.css";
 import { signupInitalValueType } from "../../types";
 import { AuthButton } from "../../components/auth-button";
 import { signup } from "../../services";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import { useLoader } from "../../components/use-loader";
+import { SubmitButton } from "../../components/submit-button";
+import { useCallback } from "react";
 
 const Signup = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const onSubmit = (values: signupInitalValueType) => {
-    console.log(values);
-    dispatch(signup(values));
-  };
+  const { loading, dispatchWithLoading } = useLoader();
+  const auth = useSelector(({ auth }: RootState) => auth);
+
+  console.log(auth);
+
+  const onSubmit = useCallback(
+    async (values: signupInitalValueType) => {
+      await dispatchWithLoading(async () => {
+        await dispatch(signup(values));
+      });
+    },
+    [dispatch, dispatchWithLoading]
+  );
 
   return (
     <Formik
@@ -62,9 +74,11 @@ const Signup = () => {
           <ErrorMessage name={confirmPassword} component={TextError} />
         </div>
 
-        <Button type="submit" colorScheme="teal" size="md">
-          Signup
-        </Button>
+        <SubmitButton
+          isLoading={loading}
+          loadingText="Signing up"
+          authType="Signup"
+        />
         <AuthButton lable="Already have an account?" path="/login" />
       </Form>
     </Formik>

@@ -1,4 +1,4 @@
-import { Formik, ErrorMessage, Field, Form, Button } from "../../lib";
+import { Formik, ErrorMessage, Field, Form } from "../../lib";
 
 import {
   confirmPassword,

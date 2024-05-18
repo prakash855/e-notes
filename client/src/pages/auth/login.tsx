@@ -7,7 +7,7 @@ import {
   loginValidationSchema as validationSchema,
   password,
 } from "../../constants";
-import { Formik, ErrorMessage, Field, Form, Button } from "../../lib";
+import { Formik, ErrorMessage, Field, Form } from "../../lib";
 import { login } from "../../services";
 import { useLoader } from "../../components/use-loader";
 import { AppDispatch, RootState } from "../../store";
@@ -21,7 +21,7 @@ const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading, dispatchWithLoading } = useLoader();
-  const { isLoggedIn, status, user, error } = useSelector(
+  const { isLoggedIn, status, user } = useSelector(
     ({ auth }: RootState) => auth
   );
   const toast = useToast();

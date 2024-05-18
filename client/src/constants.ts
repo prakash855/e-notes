@@ -101,7 +101,7 @@ export const loginValidationSchema = Yup.object({
 });
 
 export const authState: authStateType = {
-  user: null,
+  user: undefined,
   isLoggedIn: false,
   status: "idle",
   error: null,

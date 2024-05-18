@@ -1,22 +1,19 @@
-import { FC, useCallback, useState } from "react";
-
 import {
+  Box,
   Card,
-  CardHeader,
   CardBody,
+  CardHeader,
   Heading,
   Stack,
-  Box,
   Text,
   useToast,
 } from "@chakra-ui/react";
-
+import { FC, useCallback, useState } from "react";
 import { BsPin, BsPinFill } from "react-icons/bs";
-import { IoArchiveOutline, IoArchive } from "react-icons/io5";
+import { IoArchive, IoArchiveOutline } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
+import { useDispatch } from "react-redux";
 
-import styles from "./note-card.module.scss";
-import { getIconHoverClass } from "../../style";
 import {
   archiveNoteById,
   deleteNotes,
@@ -24,14 +21,15 @@ import {
   pinNote,
   updateNotes,
 } from "../../services";
-import { formatDate } from "../../utils";
-import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
+import { getIconHoverClass } from "../../style";
+import { Note } from "../../types";
+import { formatDate } from "../../utils";
+import Loader from "../loader";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
 import { useLoader } from "../use-loader";
-import Loader from "../loader";
-import { Note } from "../../types";
+import styles from "./note-card.module.scss";
 
 const NoteCard: FC = ({
   _id: id,

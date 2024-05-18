@@ -1,5 +1,13 @@
-import { Formik, ErrorMessage, Field, Form } from "../../lib";
+import "./auth.css";
 
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { ErrorMessage, Field, Form, Formik } from "@/lib";
+
+import { AuthButton } from "../../components/auth-button";
+import { SubmitButton } from "../../components/submit-button";
+import { useLoader } from "../../components/use-loader";
 import {
   confirmPassword,
   email,
@@ -9,21 +17,17 @@ import {
   signupInitialValues as initialValues,
   signupValidationSchema as validationSchema,
 } from "../../constants";
-import { TextError } from "./text-error";
-
-import "./auth.css";
-import { signupInitalValueType } from "../../types";
-import { AuthButton } from "../../components/auth-button";
 import { signup } from "../../services";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
-import { useLoader } from "../../components/use-loader";
-import { SubmitButton } from "../../components/submit-button";
-import { useCallback } from "react";
+import { AppDispatch, RootState } from "../../store";
+import { signupInitalValueType } from "../../types";
+import { TextError } from "./text-error";
 
 const Signup = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, dispatchWithLoading } = useLoader();
+  const auth = useSelector(({ auth }: RootState) => auth);
+
+  console.log(auth);
 
   const onSubmit = useCallback(
     async (values: signupInitalValueType) => {

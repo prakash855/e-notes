@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError, AxiosResponse } from "axios";
+
 import { authAPI, notesAPI } from "../constants";
 import { loginInitalValueType, Note, signupInitalValueType } from "../types";
 

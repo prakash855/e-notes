@@ -1,11 +1,13 @@
 import { Button, ModalFooter, ModalHeader, useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { logout } from "../services";
 import { AppDispatch } from "../store";
+import { LogoutType } from "../types";
 import { useLoader } from "./use-loader";
 
-export const Logout = ({ onClose }: any) => {
+export const Logout = ({ onClose }: LogoutType) => {
   const { loading, dispatchWithLoading } = useLoader();
   const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();

@@ -1,10 +1,10 @@
-import { ReactNode } from "react";
 import {
   Modal as NativeModal,
   ModalBody,
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
 type ModalProps = {
   isOpen: boolean;

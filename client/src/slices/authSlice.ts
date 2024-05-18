@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import { authState as initialState } from "../constants";
 import { login, logout, signup } from "../services";
 

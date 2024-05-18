@@ -1,7 +1,8 @@
-import { Grid, GridItem } from "@chakra-ui/react";
-import { Routes, Route, useLocation } from "react-router-dom";
-
 import "./App.css";
+
+import { Grid, GridItem } from "@chakra-ui/react";
+import { Route, Routes, useLocation } from "react-router-dom";
+
 import Header from "./components/header/header";
 import { PrivateRoute } from "./components/private-route";
 import Login from "./pages/auth/login";

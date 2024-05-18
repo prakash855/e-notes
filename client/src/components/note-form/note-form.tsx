@@ -1,4 +1,3 @@
-import { FC, SetStateAction, useCallback, useEffect, useState } from "react";
 import {
   Button,
   FormControl,
@@ -7,11 +6,13 @@ import {
   ModalCloseButton,
   ModalHeader,
   Select,
-  useToast,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
-import { colorOptions } from "../../constants";
+import { FC, SetStateAction, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+
+import { colorOptions } from "../../constants";
 import { fetchNotesById } from "../../services";
 import { AppDispatch } from "../../store";
 

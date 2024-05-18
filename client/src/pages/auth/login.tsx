@@ -1,6 +1,11 @@
 import { Box, Button, useToast } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { AuthButton } from "../../components/auth-button";
+import { SubmitButton } from "../../components/submit-button";
+import { useLoader } from "../../components/use-loader";
 import {
   email,
   guestUserCredential,
@@ -8,23 +13,16 @@ import {
   loginValidationSchema as validationSchema,
   password,
 } from "../../constants";
-import { Formik, ErrorMessage, Field, Form } from "../../lib";
+import { ErrorMessage, Field, Form, Formik } from "../../lib";
 import { login } from "../../services";
-import { useLoader } from "../../components/use-loader";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch } from "../../store";
 import { loginInitalValueType } from "../../types";
 import { TextError } from "./text-error";
-import { SubmitButton } from "../../components/submit-button";
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading, dispatchWithLoading } = useLoader();
-  const { isLoggedIn, status, user } = useSelector(
-    ({ auth }: RootState) => auth
-  );
   const toast = useToast();
 
   const onSubmit = useCallback(
@@ -57,7 +55,7 @@ const Login = () => {
         }
       });
     },
-    [dispatch, dispatchWithLoading, isLoggedIn, status, user]
+    [dispatch, dispatchWithLoading, toast, navigate]
   );
 
   const guestLoginHandler = async () => {

@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
-import { TbNotes } from "react-icons/tb";
-import { IoArchiveOutline, IoHomeOutline } from "react-icons/io5";
 import { IconType } from "react-icons";
+import { IoArchiveOutline, IoHomeOutline } from "react-icons/io5";
+import { TbNotes } from "react-icons/tb";
+import { Link } from "react-router-dom";
+
 import SidebarLink from "../components/sidebar-link/sidebar-link";
 
 export interface SidebarConfigItem {

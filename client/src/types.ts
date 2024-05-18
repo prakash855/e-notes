@@ -36,6 +36,10 @@ export type NotePageType = {
   isArchivedPage?: boolean;
 };
 
+export type ReactChildrenType = {
+  children: ReactNode;
+};
+
 //Auth
 export type AuthButtonType = {
   lable: string;
@@ -62,4 +66,8 @@ export type SubmitButtonType = {
 
 export type PrivateRouteProps = {
   children: ReactNode;
+};
+
+export type LogoutType = {
+  onClose: () => void;
 };

@@ -15,8 +15,8 @@ import "./auth.css";
 import { signupInitalValueType } from "../../types";
 import { AuthButton } from "../../components/auth-button";
 import { signup } from "../../services";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
 import { useLoader } from "../../components/use-loader";
 import { SubmitButton } from "../../components/submit-button";
 import { useCallback } from "react";
@@ -24,9 +24,6 @@ import { useCallback } from "react";
 const Signup = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, dispatchWithLoading } = useLoader();
-  const auth = useSelector(({ auth }: RootState) => auth);
-
-  console.log(auth);
 
   const onSubmit = useCallback(
     async (values: signupInitalValueType) => {

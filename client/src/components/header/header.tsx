@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Box, Button } from "@chakra-ui/react";
 
@@ -14,9 +14,6 @@ const Header: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [isLoggedOut, setIsLoggedOut] = useState<boolean>(false);
-
-  const state = useSelector((state) => state);
-  console.log(state);
 
   const handleSubmit = (data: {
     title: string | undefined;

@@ -11,6 +11,7 @@ const { VITE_APP_BASE_URL: API } = import.meta.env;
 export const notesAPI = `${API}/notes`;
 export const authAPI = `${API}/auth`;
 
+// Colors
 export const colorOptions = [
   { value: "gray.500", label: "Gray" },
   { value: "red.500", label: "Red" },

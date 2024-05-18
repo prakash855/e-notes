@@ -15,7 +15,7 @@ const Sidebar: FC = () => {
   const sidebarConfig: SidebarConfigItem[] = [
     { icon: TbNotes, label: `Notes`, path: "/" },
     { icon: IoArchiveOutline, label: `Archive`, path: "/archive" },
-    { icon: IoHomeOutline, label: `Signup`, path: "/signup" },
+    // { icon: IoHomeOutline, label: `Signup`, path: "/signup" },
     { icon: IoHomeOutline, label: `Login`, path: "/login" },
   ];
 

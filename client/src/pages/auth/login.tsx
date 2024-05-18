@@ -1,7 +1,9 @@
-import { Box, Button, useToast } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { useToast } from "@/components";
+import { Box, Button } from "@/lib";
 
 import { AuthButton } from "../../components/auth-button";
 import { SubmitButton } from "../../components/submit-button";

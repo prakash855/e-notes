@@ -1,5 +1,6 @@
-import { useToast } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
+
+import { useToast } from "@/components";
 
 interface ToastProps {
   title: string;

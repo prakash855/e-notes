@@ -1,6 +1,8 @@
-import { Button, ModalFooter, ModalHeader, useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { useToast } from "@/components";
+import { Button, ModalFooter, ModalHeader } from "@/lib";
 
 import { logout } from "../services";
 import { AppDispatch } from "../store";

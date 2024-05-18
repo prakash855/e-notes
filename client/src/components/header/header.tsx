@@ -1,6 +1,7 @@
-import { Box, Button } from "@chakra-ui/react";
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
+
+import { Box, Button } from "@/lib";
 
 import { notesPicture } from "../../constants";
 import { createNotes } from "../../services";

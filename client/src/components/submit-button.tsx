@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button } from "@/lib";
 
 import { SubmitButtonType } from "../types";
 

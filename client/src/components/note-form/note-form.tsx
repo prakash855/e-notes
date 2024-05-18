@@ -1,3 +1,7 @@
+import { FC, SetStateAction, useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { useToast } from "@/components";
 import {
   Button,
   FormControl,
@@ -7,10 +11,7 @@ import {
   ModalHeader,
   Select,
   Textarea,
-  useToast,
-} from "@chakra-ui/react";
-import { FC, SetStateAction, useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+} from "@/lib";
 
 import { colorOptions } from "../../constants";
 import { fetchNotesById } from "../../services";

@@ -1,18 +1,11 @@
-import {
-  Box,
-  Card,
-  CardBody,
-  CardHeader,
-  Heading,
-  Stack,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
 import { FC, useCallback, useState } from "react";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { IoArchive, IoArchiveOutline } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import { useDispatch } from "react-redux";
+
+import { useToast } from "@/components";
+import { Box, Card, CardBody, CardHeader, Heading, Stack, Text } from "@/lib";
 
 import {
   archiveNoteById,

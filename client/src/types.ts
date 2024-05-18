@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { IconType } from "react-icons";
 
 // Notes
 export interface Note {
@@ -36,11 +37,22 @@ export type NotePageType = {
   isArchivedPage?: boolean;
 };
 
+export type CardVariantProps = {
+  variant: string;
+};
+
 export type ReactChildrenType = {
   children: ReactNode;
 };
 
 //Auth
+
+export interface SidebarConfigItem {
+  icon: IconType;
+  label: string;
+  path?: string;
+}
+
 export type AuthButtonType = {
   lable: string;
   path: string;

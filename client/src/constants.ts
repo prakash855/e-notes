@@ -1,4 +1,5 @@
-import { Yup } from "../src/lib";
+import * as Yup from "yup";
+
 import {
   authStateType,
   loginInitalValueType,

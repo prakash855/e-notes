@@ -129,3 +129,31 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  const { rejectWithValue } = thunkAPI;
+  try {
+    // Assuming the API endpoint for logout is `${authAPI}/logout`
+    const response: AxiosResponse = await axios.post(`${authAPI}/logout`);
+
+    if (response.status !== 200) {
+      throw new Error("Failed to logout");
+    }
+
+    // Clear local storage or perform any client-side logout actions
+    localStorage.removeItem("token");
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      // AxiosError with response
+      return rejectWithValue(error.response.data);
+    } else if (axios.isAxiosError(error) && error.request) {
+      // AxiosError without response
+      return rejectWithValue("No response from server");
+    } else {
+      // Regular error
+      return rejectWithValue((error as Error).message);
+    }
+  }
+});

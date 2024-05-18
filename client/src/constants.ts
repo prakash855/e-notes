@@ -116,3 +116,8 @@ export const notesInitialState: NotesState = {
   selectedNote: null,
   error: null,
 };
+
+export const guestUserCredential: loginInitalValueType = {
+  email: "b@gmail.com",
+  password: "123456",
+};

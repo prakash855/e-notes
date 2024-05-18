@@ -1,17 +1,22 @@
 import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 
 import { createNotes } from "../../services";
 import { AppDispatch } from "../../store";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
 import { notesPicture } from "../../constants";
+import { Logout } from "../logout";
 
 const Header: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [isLoggedOut, setIsLoggedOut] = useState<boolean>(false);
+
+  const state = useSelector((state) => state);
+  console.log(state);
 
   const handleSubmit = (data: {
     title: string | undefined;
@@ -25,13 +30,25 @@ const Header: FC = () => {
   return (
     <div className="flex justify-between m-5 border-b-2 py-2">
       <img className="w-10 h-10 cursor-pointer" src={notesPicture} alt="" />
-      <Button onClick={() => setSubmitted(true)}>+ Create Note</Button>
+      <Box className="flex justify-end">
+        <Button onClick={() => setSubmitted(true)}>+ Create Note</Button>
+        <Button className="mx-2" onClick={() => setIsLoggedOut(true)}>
+          Logout
+        </Button>
+      </Box>
 
       <CreateAndUpdateModal
         isOpen={submitted}
         onClose={() => setSubmitted(false)}
       >
         <NoteForm onSubmit={handleSubmit} />
+      </CreateAndUpdateModal>
+
+      <CreateAndUpdateModal
+        isOpen={isLoggedOut}
+        onClose={() => setIsLoggedOut(false)}
+      >
+        <Logout onClose={() => setIsLoggedOut(false)} />
       </CreateAndUpdateModal>
     </div>
   );

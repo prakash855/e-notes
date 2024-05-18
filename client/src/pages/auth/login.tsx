@@ -1,8 +1,9 @@
-import { useToast } from "@chakra-ui/react";
+import { Box, Button, useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthButton } from "../../components/auth-button";
 import {
   email,
+  guestUserCredential,
   loginInitialValues as initialValues,
   loginValidationSchema as validationSchema,
   password,
@@ -59,6 +60,36 @@ const Login = () => {
     [dispatch, dispatchWithLoading, isLoggedIn, status, user]
   );
 
+  const guestLoginHandler = async () => {
+    await dispatchWithLoading(async () => {
+      const resultAction = await dispatch(login(guestUserCredential));
+      if (login.fulfilled.match(resultAction)) {
+        const user = resultAction.payload;
+
+        toast({
+          title: "Success",
+          description: user.message,
+          status: "success",
+          position: "top-right",
+        });
+
+        if (user.token) {
+          localStorage.setItem("token", user.token);
+          navigate("/");
+          console.log("success", resultAction);
+        } else {
+          console.log("error", resultAction);
+          toast({
+            title: "Error",
+            description: resultAction.payload.message,
+            status: "error",
+            position: "top-right",
+          });
+        }
+      }
+    });
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -82,6 +113,12 @@ const Login = () => {
           loadingText="Logging in"
           authType="Login"
         />
+        <Box className="py-2">
+          <Button onClick={guestLoginHandler} className="flex justify-end">
+            Login as Guest User?
+          </Button>
+        </Box>
+
         <AuthButton lable="Don't have an account?" path="/signup" />
       </Form>
     </Formik>

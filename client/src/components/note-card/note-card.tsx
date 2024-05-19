@@ -139,7 +139,7 @@ const NoteCard: FC = ({
         <CardBody className="flex flex-col justify-between">
           <Stack spacing="4">
             <Box>
-              <Text pt="2" fontSize="sm">
+              <Text whiteSpace="pre-wrap" pt="2" fontSize="sm">
                 {content}
               </Text>
             </Box>

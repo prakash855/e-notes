@@ -6,6 +6,8 @@ export {
   CardHeader,
   FormControl,
   FormLabel,
+  Grid,
+  GridItem,
   Heading,
   Input,
   ModalBody,

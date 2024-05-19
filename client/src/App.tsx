@@ -1,7 +1,8 @@
 import "./App.css";
 
-import { Grid, GridItem } from "@chakra-ui/react";
 import { Route, Routes, useLocation } from "react-router-dom";
+
+import { Grid, GridItem } from "@/lib";
 
 import Header from "./components/header/header";
 import { PrivateRoute } from "./components/private-route";

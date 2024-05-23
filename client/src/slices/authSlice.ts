@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { User } from "@/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { authState as initialState } from "../constants";
 import { login, logout, signup } from "../services";
@@ -14,29 +15,54 @@ const authSlice = createSlice({
         state.status = "loading";
         state.error = null;
       })
-      .addCase(signup.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload;
-        state.error = null;
-      })
+      .addCase(
+        signup.fulfilled,
+        (
+          state,
+          {
+            payload: { token },
+            meta: {
+              arg: { firstName, lastName, email },
+            },
+          }
+        ) => {
+          state.status = "succeeded";
+          state.isLoggedIn = true;
+          state.token = token;
+          state.user = {
+            firstName,
+            lastName,
+            email,
+          };
+          state.error = null;
+        }
+      )
       .addCase(signup.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.error.message || "signup failed";
       })
 
       // login
       .addCase(login.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(login.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload;
-        state.isLoggedIn = true;
-        state.error = null;
-      })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(
+        login.fulfilled,
+        (
+          state,
+          action: PayloadAction<{ token: string; user: User; message: string }>
+        ) => {
+          state.status = "succeeded";
+          state.isLoggedIn = true;
+          state.token = action.payload.token;
+          state.user = action.payload.user; // Correctly assigning the user object from the payload
+          state.error = null;
+        }
+      )
+
+      .addCase(login.rejected, (state, { error: { message } }) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = message || "login failed";
       })
 
       // logout
@@ -45,7 +71,8 @@ const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.status = "succeeded";
-        state.user = undefined;
+        state.user = null;
+        state.token = null;
         state.isLoggedIn = false;
         state.error = null;
       })

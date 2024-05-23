@@ -59,15 +59,17 @@ export type AuthButtonType = {
 };
 
 export type User = {
-  message?: string | undefined;
-  token?: string | undefined;
+  firstName: string;
+  lastName: string;
+  email: string;
 };
 
 export type authStateType = {
-  user?: User;
+  user: User | null; // user is either of type User or null
+  token: string | null; // token is either string or null
   isLoggedIn: boolean;
-  status?: "idle" | "loading" | "succeeded" | "failed";
-  error?: string | null | undefined;
+  status: "idle" | "loading" | "succeeded" | "failed" | null; // status includes null
+  error: string | null; // error is either string or null
 };
 
 export type SubmitButtonType = {

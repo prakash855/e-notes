@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/components";
@@ -17,16 +17,17 @@ import {
 } from "../../constants";
 import { ErrorMessage, Field, Form, Formik } from "../../lib";
 import { login } from "../../services";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { loginInitalValueType } from "../../types";
 import { TextError } from "./text-error";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const auth = useSelector(({ auth }): RootState => auth);
   const navigate = useNavigate();
   const { loading, dispatchWithLoading } = useLoader();
   const toast = useToast();
-
+  console.log({ auth });
   const onSubmit = useCallback(
     async (values: loginInitalValueType) => {
       await dispatchWithLoading(async () => {
@@ -72,7 +73,6 @@ const Login = () => {
           status: "success",
           position: "top-right",
         });
-
         if (user.token) {
           localStorage.setItem("token", user.token);
           navigate("/");

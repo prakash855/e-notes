@@ -21,9 +21,13 @@ import { signup } from "../../services";
 import { AppDispatch, RootState } from "../../store";
 import { signupInitalValueType } from "../../types";
 import { TextError } from "./text-error";
+import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const toast = useToast();
   const { loading, dispatchWithLoading } = useLoader();
   const auth = useSelector(({ auth }: RootState) => auth);
 
@@ -32,7 +36,31 @@ const Signup = () => {
   const onSubmit = useCallback(
     async (values: signupInitalValueType) => {
       await dispatchWithLoading(async () => {
-        await dispatch(signup(values));
+        const resultAction = await dispatch(signup(values));
+        if (signup.fulfilled.match(resultAction)) {
+          const user = resultAction.payload;
+
+          toast({
+            title: "Success",
+            description: user.message,
+            status: "success",
+            position: "top-right",
+          });
+
+          if (user.token) {
+            localStorage.setItem("token", user.token);
+            navigate("/");
+            console.log("success", resultAction);
+          } else {
+            console.log("error", resultAction);
+            toast({
+              title: "Error",
+              description: resultAction.payload.message,
+              status: "error",
+              position: "top-right",
+            });
+          }
+        }
       });
     },
     [dispatch, dispatchWithLoading]

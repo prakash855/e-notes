@@ -77,7 +77,15 @@ export const login = async ({ body: { email, password } }, res) => {
       }
     );
 
-    res.status(200).json({ token, message: "Loggedin Successfully!" });
+    res.status(200).json({
+      token,
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      },
+      message: "Loggedin Successfully!",
+    });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal Server Error" });

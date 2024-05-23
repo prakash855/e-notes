@@ -2,7 +2,9 @@ import "./auth.css";
 
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+import { useToast } from "@/components";
 import { ErrorMessage, Field, Form, Formik } from "@/lib";
 
 import { AuthButton } from "../../components/auth-button";
@@ -21,8 +23,6 @@ import { signup } from "../../services";
 import { AppDispatch, RootState } from "../../store";
 import { signupInitalValueType } from "../../types";
 import { TextError } from "./text-error";
-import { useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -63,7 +63,7 @@ const Signup = () => {
         }
       });
     },
-    [dispatch, dispatchWithLoading]
+    [toast, navigate, dispatch, dispatchWithLoading]
   );
 
   return (

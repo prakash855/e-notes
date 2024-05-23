@@ -1,5 +1,6 @@
-import { User } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { User } from "@/types";
 
 import { authState as initialState } from "../constants";
 import { login, logout, signup } from "../services";

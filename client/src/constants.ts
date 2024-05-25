@@ -120,6 +120,6 @@ export const notesInitialState: NotesState = {
 };
 
 export const guestUserCredential: loginInitalValueType = {
-  email: "b@gmail.com",
+  email: "prakash@gmail.com",
   password: "123456",
 };

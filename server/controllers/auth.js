@@ -45,7 +45,15 @@ export const signup = async (
       }
     );
 
-    res.status(201).json({ token, message: "Signup successful!" });
+    res.status(201).json({
+      token,
+      user: {
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        email: newUser.email,
+      },
+      message: "Signup successful!",
+    });
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ message: "Internal Server Error" });

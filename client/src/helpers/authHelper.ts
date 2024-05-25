@@ -26,19 +26,28 @@ export const handleAuth = async <T>(
   await dispatchWithLoading(async () => {
     const resultAction = await dispatch(authAction(credentials));
     if (authAction.fulfilled.match(resultAction)) {
-      const user = resultAction.payload;
-
+      const {
+        payload: { token, message, user },
+      } = resultAction;
       toast({
         title: "Success",
-        description: user.message,
+        description: message,
         status: "success",
         position: "top-right",
       });
 
-      if (user.token) {
-        localStorage.setItem("token", user.token);
+      if (token) {
+        localStorage.setItem("token", token);
+        if (user && user.firstName && user.lastName) {
+          toast({
+            title: "Success",
+            description: `Welcome ${user.firstName} ${user.lastName}`,
+            status: "success",
+            position: "top-right",
+          });
+        }
+
         navigate("/");
-        console.log("success", resultAction);
       } else {
         // Handle case where token is missing even though the action is fulfilled
         console.log("error: Token missing", resultAction);

@@ -85,3 +85,7 @@ export type PrivateRouteProps = {
 export type LogoutType = {
   onClose: () => void;
 };
+
+export type ErrorPayload = {
+  message: string;
+};

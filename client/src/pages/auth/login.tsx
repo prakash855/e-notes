@@ -1,8 +1,9 @@
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/components";
+import { handleAuth } from "@/helpers/authHelper";
 import { Box, Button } from "@/lib";
 
 import { AuthButton } from "../../components/auth-button";
@@ -17,77 +18,39 @@ import {
 } from "../../constants";
 import { ErrorMessage, Field, Form, Formik } from "../../lib";
 import { login } from "../../services";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch } from "../../store";
 import { loginInitalValueType } from "../../types";
 import { TextError } from "./text-error";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const auth = useSelector(({ auth }): RootState => auth);
   const navigate = useNavigate();
   const { loading, dispatchWithLoading } = useLoader();
   const toast = useToast();
-  console.log({ auth });
+
   const onSubmit = useCallback(
     async (values: loginInitalValueType) => {
-      await dispatchWithLoading(async () => {
-        const resultAction = await dispatch(login(values));
-        if (login.fulfilled.match(resultAction)) {
-          const user = resultAction.payload;
-
-          toast({
-            title: "Success",
-            description: user.message,
-            status: "success",
-            position: "top-right",
-          });
-
-          if (user.token) {
-            localStorage.setItem("token", user.token);
-            navigate("/");
-            console.log("success", resultAction);
-          } else {
-            console.log("error", resultAction);
-            toast({
-              title: "Error",
-              description: resultAction.payload.message,
-              status: "error",
-              position: "top-right",
-            });
-          }
-        }
-      });
+      await handleAuth(
+        dispatch,
+        login,
+        toast,
+        navigate,
+        values,
+        dispatchWithLoading
+      );
     },
     [dispatch, dispatchWithLoading, toast, navigate]
   );
 
   const guestLoginHandler = async () => {
-    await dispatchWithLoading(async () => {
-      const resultAction = await dispatch(login(guestUserCredential));
-      if (login.fulfilled.match(resultAction)) {
-        const user = resultAction.payload;
-
-        toast({
-          title: "Success",
-          description: user.message,
-          status: "success",
-          position: "top-right",
-        });
-        if (user.token) {
-          localStorage.setItem("token", user.token);
-          navigate("/");
-          console.log("success", resultAction);
-        } else {
-          console.log("error", resultAction);
-          toast({
-            title: "Error",
-            description: resultAction.payload.message,
-            status: "error",
-            position: "top-right",
-          });
-        }
-      }
-    });
+    await handleAuth(
+      dispatch,
+      login,
+      toast,
+      navigate,
+      guestUserCredential,
+      dispatchWithLoading
+    );
   };
 
   return (

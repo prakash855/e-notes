@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/components";
+import { handleAuth } from "@/helpers/authHelper";
 import { ErrorMessage, Field, Form, Formik } from "@/lib";
 
 import { AuthButton } from "../../components/auth-button";
@@ -34,35 +35,15 @@ const Signup = () => {
   console.log(auth);
 
   const onSubmit = useCallback(
-    async (values: signupInitalValueType) => {
-      await dispatchWithLoading(async () => {
-        const resultAction = await dispatch(signup(values));
-        if (signup.fulfilled.match(resultAction)) {
-          const user = resultAction.payload;
-
-          toast({
-            title: "Success",
-            description: user.message,
-            status: "success",
-            position: "top-right",
-          });
-
-          if (user.token) {
-            localStorage.setItem("token", user.token);
-            navigate("/");
-            console.log("success", resultAction);
-          } else {
-            console.log("error", resultAction);
-            toast({
-              title: "Error",
-              description: resultAction.payload.message,
-              status: "error",
-              position: "top-right",
-            });
-          }
-        }
-      });
-    },
+    async (values: signupInitalValueType) =>
+      await handleAuth(
+        dispatch,
+        signup,
+        toast,
+        navigate,
+        values,
+        dispatchWithLoading
+      ),
     [toast, navigate, dispatch, dispatchWithLoading]
   );
 

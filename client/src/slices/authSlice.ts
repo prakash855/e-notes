@@ -38,9 +38,11 @@ const authSlice = createSlice({
           state.error = null;
         }
       )
-      .addCase(signup.rejected, (state, action) => {
+      .addCase(signup.rejected, (state, { payload }) => {
         state.status = "failed";
-        state.error = action.error.message || "signup failed";
+        state.error = payload
+          ? JSON.parse(JSON.stringify(payload))
+          : "Signup failed";
       })
 
       // login

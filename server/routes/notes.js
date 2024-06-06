@@ -8,6 +8,7 @@ import {
   archiveNotes,
   getNotesById,
 } from "../controllers/notes.js";
+import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -21,6 +22,8 @@ const routes = [
   { method: "patch", path: "/:id/archive", controller: archiveNotes },
 ];
 
-routes.map(({ method, path, controller }) => router[method](path, controller));
+routes.map(({ method, path, controller }) =>
+  router[method](path, authMiddleware, controller)
+);
 
 export default router;

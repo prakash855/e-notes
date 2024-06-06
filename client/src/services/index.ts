@@ -1,3 +1,4 @@
+import { getToken } from "@/helpers/token";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
@@ -5,10 +6,25 @@ import { authAPI, notesAPI } from "../constants";
 import { loginInitalValueType, Note, signupInitalValueType } from "../types";
 
 // Notes Services
-export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
-  const { data } = await axios(notesAPI);
-  return data;
-});
+export const fetchNotes = createAsyncThunk(
+  "notes/fetchNotes",
+  async (_, { rejectWithValue }) => {
+    const token = getToken();
+    if (!token) {
+      return rejectWithValue(`No token found!`);
+    }
+    try {
+      const { data } = await axios(notesAPI, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
 
 export const fetchNotesById = createAsyncThunk(
   "notes/fetchNotesById",
@@ -20,9 +36,21 @@ export const fetchNotesById = createAsyncThunk(
 
 export const createNotes = createAsyncThunk(
   "notes/createNotes",
-  async (newNote: Note) => {
-    const { data } = await axios.post(notesAPI, newNote);
-    return data;
+  async (newNote: Note, { rejectWithValue }) => {
+    const token = getToken();
+    if (!token) {
+      return rejectWithValue(`No token found!`);
+    }
+    try {
+      const { data } = await axios.post(notesAPI, newNote, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
   }
 );
 

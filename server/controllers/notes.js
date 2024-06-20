@@ -1,12 +1,13 @@
 import { Note } from "../models/notes.js";
 import { unknowNoteHandler } from "../utils.js";
 
-export const getNotes = async (_, res) => {
+export const getNotes = async (req, res) => {
   try {
-    const Notes = await Note.find();
-    res.status(200).json(Notes);
-  } catch ({ message }) {
-    res.status(404).json({ message });
+    const userId = req.user.sub; // Assuming user ID is stored in the token's sub claim
+    const notes = await Note.find({ user: userId });
+    res.status(200).json(notes);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
 
@@ -24,9 +25,11 @@ export const getNotesById = async ({ params: { id } }, res) => {
   }
 };
 
-export const createNotes = async ({ body }, res) => {
-  const note = body;
+export const createNotes = async ({ body, user }, res) => {
+  const note = { ...body, user: user.sub }; // Add user ID to the note
+
   const newNote = new Note(note);
+
   try {
     await newNote.save();
     res.status(201).json(newNote);

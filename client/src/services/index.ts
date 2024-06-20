@@ -1,3 +1,4 @@
+import axiosInstance from "@/axiosIntance";
 import { getToken } from "@/helpers/token";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError, AxiosResponse } from "axios";
@@ -14,7 +15,7 @@ export const fetchNotes = createAsyncThunk(
       return rejectWithValue(`No token found!`);
     }
     try {
-      const { data } = await axios(notesAPI, {
+      const { data } = await axiosInstance(notesAPI, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -29,7 +30,7 @@ export const fetchNotes = createAsyncThunk(
 export const fetchNotesById = createAsyncThunk(
   "notes/fetchNotesById",
   async (_id: string) => {
-    const { data } = await axios(`${notesAPI}/${_id}`);
+    const { data } = await axiosInstance(`${notesAPI}/${_id}`);
     return data;
   }
 );
@@ -42,7 +43,7 @@ export const createNotes = createAsyncThunk(
       return rejectWithValue(`No token found!`);
     }
     try {
-      const { data } = await axios.post(notesAPI, newNote, {
+      const { data } = await axiosInstance.post(notesAPI, newNote, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -57,7 +58,7 @@ export const createNotes = createAsyncThunk(
 export const deleteNotes = createAsyncThunk(
   "notes/deleteNotes",
   async (_id: string) => {
-    await axios.delete(`${notesAPI}/${_id}`);
+    await axiosInstance.delete(`${notesAPI}/${_id}`);
     return _id;
   }
 );
@@ -65,7 +66,7 @@ export const deleteNotes = createAsyncThunk(
 export const updateNotes = createAsyncThunk(
   "notes/updatedNotes",
   async (updatedNote: Note) => {
-    const { data } = await axios.patch(
+    const { data } = await axiosInstance.patch(
       `${notesAPI}/${updatedNote._id}`,
       updatedNote
     );
@@ -76,13 +77,13 @@ export const updateNotes = createAsyncThunk(
 export const archiveNoteById = createAsyncThunk(
   "notes/archiveNotes",
   async (_id: string) => {
-    const { data } = await axios.patch(`${notesAPI}/${_id}/archive`);
+    const { data } = await axiosInstance.patch(`${notesAPI}/${_id}/archive`);
     return data;
   }
 );
 
 export const pinNote = createAsyncThunk("notes/pinNote", async (id: string) => {
-  const { data } = await axios.patch(`${notesAPI}/${id}/pin`);
+  const { data } = await axiosInstance.patch(`${notesAPI}/${id}/pin`);
   return data;
 });
 
@@ -104,13 +105,16 @@ export const signup = createAsyncThunk(
         throw new Error("Passwords do not match");
       }
 
-      const response: AxiosResponse = await axios.post(`${authAPI}/signup`, {
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-      });
+      const response: AxiosResponse = await axiosInstance.post(
+        `${authAPI}/signup`,
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+          confirmPassword,
+        }
+      );
 
       if (response.status !== 201) {
         throw new Error("Failed to signup");
@@ -136,8 +140,9 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credential: loginInitalValueType, { rejectWithValue }) => {
     try {
-      const response: AxiosResponse = await axios.post(
-        `${authAPI}/login`,
+      console.log("Calling axiosInstance"); // Add a console log for debugging
+      const response: AxiosResponse = await axiosInstance.post(
+        `auth/login`,
         credential
       );
       if (response.status !== 200) {
@@ -163,7 +168,9 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
   try {
     // Assuming the API endpoint for logout is `${authAPI}/logout`
-    const response: AxiosResponse = await axios.post(`${authAPI}/logout`);
+    const response: AxiosResponse = await axiosInstance.post(
+      `${authAPI}/logout`
+    );
 
     if (response.status !== 200) {
       throw new Error("Failed to logout");

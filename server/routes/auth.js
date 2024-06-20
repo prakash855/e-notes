@@ -2,7 +2,6 @@
 
 import express from "express";
 import { signup, login, logout } from "../controllers/auth.js";
-import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -12,8 +11,6 @@ const routes = [
   { path: "/logout", controller: logout },
 ];
 
-routes.map(({ path, controller }) =>
-  router.post(path, authMiddleware, controller)
-);
+routes.map(({ path, controller }) => router.post(path, controller));
 
 export default router;

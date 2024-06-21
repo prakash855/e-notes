@@ -11,9 +11,23 @@ import { authMiddleware } from "./middleware/auth.js";
 const app = express();
 dotenv.config();
 
+// CORS configuration
+const corsOptions = {
+  origin: "*", // You can restrict this to specific origins if needed
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "Authorization",
+  ],
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors());
 
 app.use("/notes", authMiddleware, notesRoutes);
 app.use("/auth", authRoutes);

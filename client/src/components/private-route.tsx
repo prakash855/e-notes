@@ -8,7 +8,7 @@ import { PrivateRouteProps } from "../types";
 export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
   const token = getToken();
   if (!token) {
-    return <Navigate to="login" replace />;
+    return <Navigate to="/login" replace />;
   }
   return <>{children}</>;
 };

@@ -50,7 +50,7 @@ export type ReactChildrenType = {
 export interface SidebarConfigItem {
   icon: IconType;
   label: string;
-  path?: string;
+  path?: string | undefined;
 }
 
 export type AuthButtonType = {

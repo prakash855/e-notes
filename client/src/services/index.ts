@@ -16,14 +16,14 @@ export const fetchNotes = createAsyncThunk(
       return rejectWithValue(`No token found!`);
     }
     try {
-      const { data } = await axiosInstance(notesAPI, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const { data } = await axiosInstance(notesAPI);
       return data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      if (error?.response?.status === 401) {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      } else
+        return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );

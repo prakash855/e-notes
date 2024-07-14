@@ -1,5 +1,10 @@
 {
   "version": 2,
-  "builds": [{ "src": "vite build" }],
+  "builds": [
+    {
+      "src": "vite build",
+      "use": "@vercel/static-build"
+    }
+  ],
   "routes": [{ "handle": "filesystem" }, { "src": "/.*", "dest": "index.html" }]
 }

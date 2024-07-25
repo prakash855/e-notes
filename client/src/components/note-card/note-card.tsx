@@ -129,7 +129,7 @@ const NoteCard: FC = ({
       <Card
         cursor={`pointer`}
         width={300}
-        height={!showEntireContent ? 300 : ""}
+        height={!showEntireContent ? "max-content" : ""}
         background={backgroundColor}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

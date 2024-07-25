@@ -1,3 +1,4 @@
+import { Link } from "@chakra-ui/react";
 import { FC, useCallback, useState } from "react";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { IoArchive, IoArchiveOutline } from "react-icons/io5";
@@ -36,6 +37,7 @@ const NoteCard: FC = ({
   const [isHovered, setHovered] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const [showEntireContent, setShowEntireContent] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
@@ -106,6 +108,12 @@ const NoteCard: FC = ({
     },
     [dispatch, dispatchWithLoading]
   );
+  const toggleContentVisibility = () =>
+    setShowEntireContent(!showEntireContent);
+
+  const truncatedContent = showEntireContent
+    ? content
+    : `${content?.substring(0, 90)}...`;
 
   return (
     <>
@@ -121,6 +129,7 @@ const NoteCard: FC = ({
       <Card
         cursor={`pointer`}
         width={300}
+        height={!showEntireContent ? 300 : ""}
         background={backgroundColor}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -140,8 +149,14 @@ const NoteCard: FC = ({
           <Stack spacing="4">
             <Box>
               <Text whiteSpace="pre-wrap" pt="2" fontSize="sm">
-                {content}
+                {truncatedContent}
               </Text>
+              <Link
+                className="flex justify-end"
+                onClick={toggleContentVisibility}
+              >
+                {showEntireContent ? `Less` : `More`}
+              </Link>
             </Box>
             <div className="flex items-center justify-between">
               <div className={getIconHoverClass(isHovered)}>

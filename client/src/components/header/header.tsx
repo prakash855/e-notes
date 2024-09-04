@@ -1,11 +1,11 @@
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 
+import { notesPicture } from "@/constants";
 import { Box, Button } from "@/lib";
+import { createNotes } from "@/services";
+import { AppDispatch } from "@/store";
 
-import { notesPicture } from "../../constants";
-import { createNotes } from "../../services";
-import { AppDispatch } from "../../store";
 import { Logout } from "../logout";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";

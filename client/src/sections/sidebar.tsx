@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { getToken } from "@/helpers/token";
 import { SidebarConfigItem } from "@/types";
 
-import SidebarLink from "../components/sidebar-link/sidebar-link";
+import SidebarLink from "@/components/sidebar-link/sidebar-link";
 
 const Sidebar: FC = () => {
   const isAuthenticated = Boolean(getToken());

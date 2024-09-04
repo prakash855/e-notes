@@ -6,23 +6,23 @@ import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import { useDispatch } from "react-redux";
 
 import { useToast } from "@/components";
+import { useLoader } from "@/hooks/use-loader";
 import { Box, Card, CardBody, CardHeader, Heading, Stack, Text } from "@/lib";
-
 import {
   archiveNoteById,
   deleteNotes,
   fetchNotes,
   pinNote,
   updateNotes,
-} from "../../services";
-import { AppDispatch } from "../../store";
-import { getIconHoverClass } from "../../style";
-import { Note } from "../../types";
-import { formatDate } from "../../utils";
+} from "@/services";
+import { AppDispatch } from "@/store";
+import { getIconHoverClass } from "@/style";
+import { Note } from "@/types";
+import { formatDate } from "@/utils";
+
 import Loader from "../loader";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
-import { useLoader } from "../../hooks/use-loader";
 import styles from "./note-card.module.scss";
 
 const NoteCard: FC = ({

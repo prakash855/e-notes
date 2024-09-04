@@ -4,22 +4,22 @@ import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/components";
 import { handleAuth } from "@/helpers/authHelper";
+import { useLoader } from "@/hooks/use-loader";
 import { Box, Button } from "@/lib";
 
-import { AuthButton } from "../../components/auth-button";
-import { SubmitButton } from "../../components/submit-button";
-import { useLoader } from "../../hooks/use-loader";
+import { AuthButton } from "@/components/auth-button";
+import { SubmitButton } from "@/components/submit-button";
 import {
   email,
   guestUserCredential,
   loginInitialValues as initialValues,
   loginValidationSchema as validationSchema,
   password,
-} from "../../constants";
-import { ErrorMessage, Field, Form, Formik } from "../../lib";
-import { login } from "../../services";
-import { AppDispatch } from "../../store";
-import { loginInitalValueType } from "../../types";
+} from "@/constants";
+import { ErrorMessage, Field, Form, Formik } from "@/lib";
+import { login } from "@/services";
+import { AppDispatch } from "@/store";
+import { loginInitalValueType } from "@/types";
 import { TextError } from "./text-error";
 
 const Login = () => {

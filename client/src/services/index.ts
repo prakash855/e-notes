@@ -4,8 +4,8 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import axiosInstance from "@/axiosIntance";
 import { getToken } from "@/helpers/token";
 
-import { authAPI, notesAPI } from "../constants";
-import { loginInitalValueType, Note, signupInitalValueType } from "../types";
+import { authAPI, notesAPI } from "@/constants";
+import { loginInitalValueType, Note, signupInitalValueType } from "@/types";
 
 // Notes Services
 export const fetchNotes = createAsyncThunk(

@@ -2,12 +2,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/components";
+import { useLoader } from "@/hooks/use-loader";
 import { Button, ModalFooter, ModalHeader } from "@/lib";
-
-import { logout } from "../services";
-import { AppDispatch } from "../store";
-import { LogoutType } from "../types";
-import { useLoader } from "../hooks/use-loader";
+import { logout } from "@/services";
+import { AppDispatch } from "@/store";
+import { LogoutType } from "@/types";
 
 export const Logout = ({ onClose }: LogoutType) => {
   const { loading, dispatchWithLoading } = useLoader();

@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@/components";
+import { AuthButton } from "@/components/auth-button";
+import { SubmitButton } from "@/components/submit-button";
 import { handleAuth } from "@/helpers/authHelper";
+import { useLoader } from "@/hooks/use-loader";
 import { ErrorMessage, Field, Form, Formik } from "@/lib";
 
-import { AuthButton } from "../../components/auth-button";
-import { SubmitButton } from "../../components/submit-button";
-import { useLoader } from "../../hooks/use-loader";
 import {
   confirmPassword,
   email,
@@ -19,10 +19,10 @@ import {
   password,
   signupInitialValues as initialValues,
   signupValidationSchema as validationSchema,
-} from "../../constants";
-import { signup } from "../../services";
-import { AppDispatch, RootState } from "../../store";
-import { signupInitalValueType } from "../../types";
+} from "@/constants";
+import { signup } from "@/services";
+import { AppDispatch, RootState } from "@/store";
+import { signupInitalValueType } from "@/types";
 import { TextError } from "./text-error";
 
 const Signup = () => {

@@ -1,6 +1,5 @@
 import { Button } from "@/lib";
-
-import { SubmitButtonType } from "../types";
+import { SubmitButtonType } from "@/types";
 
 export const SubmitButton = ({
   isLoading,

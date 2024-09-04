@@ -2,6 +2,7 @@ import { FC, SetStateAction, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { useToast } from "@/components";
+import { colorOptions } from "@/constants";
 import {
   Button,
   FormControl,
@@ -12,10 +13,8 @@ import {
   Select,
   Textarea,
 } from "@/lib";
-
-import { colorOptions } from "../../constants";
-import { fetchNotesById } from "../../services";
-import { AppDispatch } from "../../store";
+import { fetchNotesById } from "@/services";
+import { AppDispatch } from "@/store";
 
 interface NoteFormProps {
   id?: string;

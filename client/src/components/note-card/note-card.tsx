@@ -22,7 +22,7 @@ import { formatDate } from "../../utils";
 import Loader from "../loader";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
-import { useLoader } from "../use-loader";
+import { useLoader } from "../../hooks/use-loader";
 import styles from "./note-card.module.scss";
 
 const NoteCard: FC = ({

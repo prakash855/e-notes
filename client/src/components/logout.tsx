@@ -7,7 +7,7 @@ import { Button, ModalFooter, ModalHeader } from "@/lib";
 import { logout } from "../services";
 import { AppDispatch } from "../store";
 import { LogoutType } from "../types";
-import { useLoader } from "./use-loader";
+import { useLoader } from "../hooks/use-loader";
 
 export const Logout = ({ onClose }: LogoutType) => {
   const { loading, dispatchWithLoading } = useLoader();

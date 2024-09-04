@@ -10,7 +10,7 @@ import { ErrorMessage, Field, Form, Formik } from "@/lib";
 
 import { AuthButton } from "../../components/auth-button";
 import { SubmitButton } from "../../components/submit-button";
-import { useLoader } from "../../components/use-loader";
+import { useLoader } from "../../hooks/use-loader";
 import {
   confirmPassword,
   email,

@@ -91,37 +91,22 @@ export const pinNote = createAsyncThunk("notes/pinNote", async (id: string) => {
 // Auth Services
 export const signup = createAsyncThunk(
   "auth/signup",
-  async (
-    {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-    }: signupInitalValueType,
-    { rejectWithValue }
-  ) => {
+  async (signupData: signupInitalValueType, { rejectWithValue }) => {
     try {
-      if (password !== confirmPassword) {
+      if (signupData.password !== signupData.confirmPassword) {
         throw new Error("Passwords do not match");
       }
 
-      const response: AxiosResponse = await axiosInstance.post(
+      const { data, status }: AxiosResponse = await axiosInstance.post(
         `${authAPI}/signup`,
-        {
-          firstName,
-          lastName,
-          email,
-          password,
-          confirmPassword,
-        }
+        signupData
       );
 
-      if (response.status !== 201) {
+      if (status !== 201) {
         throw new Error("Failed to signup");
       }
 
-      return response.data;
+      return data;
     } catch (error) {
       if ((error as AxiosError).response) {
         return rejectWithValue((error as AxiosError).response!.data);
@@ -141,15 +126,14 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credential: loginInitalValueType, { rejectWithValue }) => {
     try {
-      console.log("Calling axiosInstance"); // Add a console log for debugging
-      const response: AxiosResponse = await axiosInstance.post(
+      const { data, status }: AxiosResponse = await axiosInstance.post(
         `auth/login`,
         credential
       );
-      if (response.status !== 200) {
+      if (status !== 200) {
         throw new Error(`Failed to login`);
       }
-      return response.data;
+      return data;
     } catch (error) {
       if ((error as AxiosError).response) {
         // AxiosError with response
@@ -169,18 +153,18 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
   try {
     // Assuming the API endpoint for logout is `${authAPI}/logout`
-    const response: AxiosResponse = await axiosInstance.post(
+    const { data, status }: AxiosResponse = await axiosInstance.post(
       `${authAPI}/logout`
     );
 
-    if (response.status !== 200) {
+    if (status !== 200) {
       throw new Error("Failed to logout");
     }
 
     // Clear local storage or perform any client-side logout actions
     localStorage.removeItem("token");
 
-    return response.data;
+    return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       // AxiosError with response

@@ -20,6 +20,19 @@ export interface NotesState {
   error: string | null;
 }
 
+export interface NotesIntialState {
+  title: string | undefined;
+  content: string;
+  backgroundColor: string;
+}
+
+export interface NoteFormProps {
+  id?: string;
+  onSubmit: (data: NotesIntialState) => void;
+  initialData?: NotesIntialState;
+  editMode?: boolean;
+}
+
 export type signupInitalValueType = {
   firstName: string;
   lastName: string;

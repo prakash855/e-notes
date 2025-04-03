@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components";
 import { Button, ModalFooter, ModalHeader } from "@/lib";
 
+import { useLoader } from "../hooks/use-loader";
 import { logout } from "../services";
 import { AppDispatch } from "../store";
 import { LogoutType } from "../types";
-import { useLoader } from "../hooks/use-loader";
 
 export const Logout = ({ onClose }: LogoutType) => {
   const { loading, dispatchWithLoading } = useLoader();

@@ -12,11 +12,11 @@ import {
   Select,
   Textarea,
 } from "@/lib";
+import { NoteFormProps } from "@/types";
 
 import { colorOptions } from "../../constants";
 import { fetchNotesById } from "../../services";
 import { AppDispatch } from "../../store";
-import { NoteFormProps } from "@/types";
 
 const NoteForm: FC<NoteFormProps> = ({
   id,

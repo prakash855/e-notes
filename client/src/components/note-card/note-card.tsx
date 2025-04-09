@@ -1,33 +1,25 @@
+import { Link } from "@chakra-ui/react";
 import { FC, useCallback, useState } from "react";
-
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Heading,
-  Stack,
-  Box,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
-
 import { BsPin, BsPinFill } from "react-icons/bs";
-import { IoArchiveOutline, IoArchive } from "react-icons/io5";
+import { IoArchive, IoArchiveOutline } from "react-icons/io5";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
+import { useDispatch } from "react-redux";
 
-import styles from "./note-card.module.scss";
-import { getIconHoverClass } from "../../style";
+import { useToast } from "@/components";
+import { Box, Card, CardBody, CardHeader, Heading, Stack, Text } from "@/lib";
+
 import {
   archiveNoteById,
   deleteNotes,
   fetchNotes,
-  Note,
   pinNote,
   updateNotes,
-} from "../../slices/services";
-import { formatDate } from "../../utils";
-import { useDispatch } from "react-redux";
+} from "../../services";
 import { AppDispatch } from "../../store";
+import { getIconHoverClass } from "../../style";
+import { Note } from "../../types";
+import { formatDate } from "../../utils";
+import Loader from "../loader";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
 import { useLoader } from "../hooks/use-loader";
@@ -45,6 +37,7 @@ const NoteCard: FC = ({
   const [isHovered, setHovered] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const [showEntireContent, setShowEntireContent] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
@@ -115,6 +108,12 @@ const NoteCard: FC = ({
     },
     [dispatch, dispatchWithLoading]
   );
+  const toggleContentVisibility = () =>
+    setShowEntireContent(!showEntireContent);
+
+  const truncatedContent = showEntireContent
+    ? content
+    : `${content?.substring(0, 90)}...`;
 
   return (
     <>
@@ -130,6 +129,7 @@ const NoteCard: FC = ({
       <Card
         cursor={`pointer`}
         width={300}
+        height={!showEntireContent ? "max-content" : ""}
         background={backgroundColor}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -148,9 +148,15 @@ const NoteCard: FC = ({
         <CardBody className="flex flex-col justify-between">
           <Stack spacing="4">
             <Box>
-              <Text pt="2" fontSize="sm">
-                {content}
+              <Text whiteSpace="pre-wrap" pt="2" fontSize="sm">
+                {truncatedContent}
               </Text>
+              <Link
+                className="flex justify-end"
+                onClick={toggleContentVisibility}
+              >
+                {showEntireContent ? `Less` : `More`}
+              </Link>
             </Box>
             <div className="flex items-center justify-between">
               <div className={getIconHoverClass(isHovered)}>

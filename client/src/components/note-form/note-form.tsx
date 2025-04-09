@@ -1,4 +1,7 @@
 import { FC, SetStateAction, useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { useToast } from "@/components";
 import {
   Button,
   FormControl,
@@ -7,24 +10,13 @@ import {
   ModalCloseButton,
   ModalHeader,
   Select,
-  useToast,
   Textarea,
-} from "@chakra-ui/react";
-import { colorOptions } from "../../constants";
-import { useDispatch } from "react-redux";
-import { fetchNotesById } from "../../slices/services";
-import { AppDispatch } from "../../store";
+} from "@/lib";
+import { NoteFormProps } from "@/types";
 
-interface NoteFormProps {
-  id?: string;
-  onSubmit: (data: {
-    title: string | undefined;
-    content: string;
-    backgroundColor: string;
-  }) => void;
-  initialData?: { title: string; content: string; backgroundColor: string };
-  editMode?: boolean;
-}
+import { colorOptions } from "../../constants";
+import { fetchNotesById } from "../../services";
+import { AppDispatch } from "../../store";
 
 const NoteForm: FC<NoteFormProps> = ({
   id,
@@ -32,11 +24,13 @@ const NoteForm: FC<NoteFormProps> = ({
   initialData,
   editMode,
 }) => {
-  const [notesState, setNotesState] = useState({
+  const notesInitialState = {
     title: initialData?.title || "",
     content: initialData?.content || "",
     backgroundColor: initialData?.backgroundColor || "",
-  });
+  };
+
+  const [notesState, setNotesState] = useState(notesInitialState);
   const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
 
@@ -100,11 +94,17 @@ const NoteForm: FC<NoteFormProps> = ({
     };
   }, [editMode, id, dispatch]);
 
+  const colors = colorOptions.map(({ value, label }) => (
+    <option key={value} value={value}>
+      {label}
+    </option>
+  ));
+
+  const action = editMode ? `Update` : `Create`;
+
   return (
     <>
-      <ModalHeader textAlign="center">
-        {editMode ? `Update` : `Create`} your note
-      </ModalHeader>
+      <ModalHeader textAlign="center">{action} your note</ModalHeader>
       <ModalCloseButton />
       <form onSubmit={handleSubmit}>
         <FormControl>
@@ -136,16 +136,12 @@ const NoteForm: FC<NoteFormProps> = ({
             onChange={handleSelectChange}
             placeholder="Select option"
           >
-            {colorOptions.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
+            {colors}
           </Select>
         </FormControl>
 
         <Button type="submit" colorScheme="blue" mt={4}>
-          {editMode ? `Update` : `Add Note`}
+          {action}
         </Button>
       </form>
     </>

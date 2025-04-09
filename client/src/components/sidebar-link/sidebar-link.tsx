@@ -1,4 +1,4 @@
-import { SidebarConfigItem } from "../../sections/sidebar";
+import { SidebarConfigItem } from "@/types";
 
 const SidebarLink = ({ icon: Icon, label }: SidebarConfigItem) => (
   <div

@@ -1,3 +1,18 @@
+import * as Yup from "yup";
+
+import {
+  authStateType,
+  loginInitalValueType,
+  NotesState,
+  signupInitalValueType,
+} from "./types";
+
+const { VITE_APP_BASE_URL: API } = import.meta.env;
+
+export const notesAPI = `${API}/notes`;
+export const authAPI = `${API}/auth`;
+
+// Colors
 export const colorOptions = [
   { value: "gray.500", label: "Gray" },
   { value: "red.500", label: "Red" },
@@ -46,3 +61,65 @@ export const colorOptions = [
 ];
 
 export const notesPicture = `https://timingapp.com/cdn-cgi/image/format=auto,width=256/img/app-icons/com.apple.Notes/icon_128x128_2x.png`;
+
+export const firstName = "firstName";
+export const lastName = "lastName";
+export const email = "email";
+export const password = "password";
+export const confirmPassword = "confirmPassword";
+
+//Auth
+export const signupInitialValues: signupInitalValueType = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
+export const loginInitialValues: loginInitalValueType = {
+  email: "",
+  password: "",
+};
+
+export const signupValidationSchema = Yup.object({
+  firstName: Yup.string().required(),
+  lastName: Yup.string().required(),
+  email: Yup.string().email(`Invalid email format`).required(),
+  password: Yup.string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters long"),
+  confirmPassword: Yup.string()
+    .required("Confirm password is required")
+    .min(6, "Password must be at least 6 characters long")
+    .test("passwords-match", "Passwords must match", function (value) {
+      return this.parent.password === value;
+    }),
+});
+
+export const loginValidationSchema = Yup.object({
+  email: Yup.string().email(`Invalid email format`).required(),
+  password: Yup.string().required(),
+});
+
+export const authState: authStateType = {
+  isLoggedIn: false,
+  user: null,
+  token: null,
+  status: null,
+  error: null,
+};
+
+// Notes
+
+export const notesInitialState: NotesState = {
+  notes: [],
+  status: "idle",
+  selectedNote: null,
+  error: null,
+};
+
+export const guestUserCredential: loginInitalValueType = {
+  email: "prakash@gmail.com",
+  password: "123456",
+};

@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { BsPinFill } from "react-icons/bs";
 
-import NoteCard from "../components/note-card/note-card";
-import { fetchNotes, Note } from "../slices/services";
-import { AppDispatch, RootState } from "../store";
 import { CardVariant } from "../components/card-variant";
 import Loader from "../components/loader";
-import styles from "../components/note-card/note-card.module.scss";
+import NoteCard from "../components/note-card/note-card";
+import { fetchNotes } from "../services";
+import { AppDispatch, RootState } from "../store";
+import { Note, NotePageType } from "../types";
 
-export const Body = () => {
+export const Notes = ({ isArchivedPage }: NotePageType) => {
   // Hooks
-  const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
-  const notes = useSelector((state: RootState) => state.notes);
+  const notes = useSelector(({ notes }: RootState) => notes);
 
   // States
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,7 +25,7 @@ export const Body = () => {
         setIsLoading(false);
       }
     })();
-  }, [dispatch, pathname]);
+  }, [dispatch, isArchivedPage]);
 
   if (isLoading) return <Loader />;
 
@@ -39,13 +36,7 @@ export const Body = () => {
           ?.filter((note: Note) => note.isPinned)
           ?.map((pinnedNote: Note) => (
             <div key={pinnedNote._id}>
-              <div className="flex items-end">
-                <BsPinFill
-                  style={{ fontSize: 13 }}
-                  className={`${styles["icon-style"]} relative left-4`}
-                />
-                <CardVariant variant="PINNED" />
-              </div>
+              <CardVariant variant="PINNED" />
               <NoteCard key={pinnedNote._id} {...pinnedNote} />
             </div>
           ))}
@@ -54,10 +45,10 @@ export const Body = () => {
       <CardVariant variant="OTHERS" />
       <div className="flex gap-5 flex-wrap my-4">
         {notes?.notes
-          ?.filter((note: Note) =>
-            pathname === `/` ? !note.isArchived : note.isArchived
+          ?.filter(({ isArchived }: Note) =>
+            isArchivedPage ? isArchived : !isArchived
           )
-          ?.filter((note: Note) => !note.isPinned)
+          ?.filter(({ isPinned }: Note) => !isPinned)
           ?.map((note: Note) => (
             <NoteCard key={note._id} {...note} />
           ))}
@@ -66,4 +57,4 @@ export const Body = () => {
   );
 };
 
-export default Body;
+export default Notes;

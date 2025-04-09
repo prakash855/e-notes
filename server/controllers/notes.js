@@ -1,21 +1,18 @@
-import mongoose from "mongoose";
 import { Note } from "../models/notes.js";
+import { unknowNoteHandler } from "../utils.js";
 
 export const getNotes = async (req, res) => {
   try {
-    const Notes = await Note.find();
-    res.status(200).json(Notes);
+    const userId = req.user.sub; // Assuming user ID is stored in the token's sub claim
+    const notes = await Note.find({ user: userId });
+    res.status(200).json(notes);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
-export const getNotesById = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No note with this ID`);
-
+export const getNotesById = async ({ params: { id } }, res) => {
+  unknowNoteHandler(id, res);
   try {
     const note = await Note.findById(id);
 
@@ -23,14 +20,16 @@ export const getNotesById = async (req, res) => {
       return res.status(404).json({ message: "Note not found" });
     }
     res.status(200).json(note);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch ({ message }) {
+    res.status(500).json({ message });
   }
 };
 
-export const createNotes = async (req, res) => {
-  const note = req.body;
+export const createNotes = async ({ body, user }, res) => {
+  const note = { ...body, user: user.sub }; // Add user ID to the note
+
   const newNote = new Note(note);
+
   try {
     await newNote.save();
     res.status(201).json(newNote);
@@ -39,19 +38,16 @@ export const createNotes = async (req, res) => {
   }
 };
 
-export const deleteNotes = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with this ID`);
+export const deleteNotes = async ({ params: { id } }, res) => {
+  unknowNoteHandler(id, res);
   await Note.findByIdAndDelete(id);
   res.json({ message: `Notes deleted successfully!` });
 };
 
-export const updateNotes = async (req, res) => {
-  const { id: _id } = req.params;
-  const notes = req.body;
-  if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send(`No post with this ID`);
+export const updateNotes = async ({ params, body }, res) => {
+  const { id: _id } = params;
+  const notes = body;
+  unknowNoteHandler(_id, res);
   const updatedNotes = await Note.findByIdAndUpdate(
     _id,
     { ...notes, _id },
@@ -60,10 +56,9 @@ export const updateNotes = async (req, res) => {
   res.json(updatedNotes);
 };
 
-export const archiveNotes = async (req, res) => {
-  const { id: _id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send(`No note with this ID`);
+export const archiveNotes = async ({ params }, res) => {
+  const { id: _id } = params;
+  unknowNoteHandler(_id, res);
   try {
     const note = await Note.findById(_id);
     if (!note) {
@@ -83,10 +78,8 @@ export const archiveNotes = async (req, res) => {
   }
 };
 
-export const pinNotes = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No note with this ID`);
+export const pinNotes = async ({ params: { id } }, res) => {
+  unknowNoteHandler(id, res);
   try {
     const note = await Note.findById(id);
     if (!note) return res.status(404).send(`No note with this ID`);

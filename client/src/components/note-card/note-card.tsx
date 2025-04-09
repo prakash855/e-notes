@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useToast } from "@/components";
 import { Box, Card, CardBody, CardHeader, Heading, Stack, Text } from "@/lib";
 
+import { useLoader } from "../../hooks/use-loader";
 import {
   archiveNoteById,
   deleteNotes,
@@ -22,8 +23,7 @@ import { formatDate } from "../../utils";
 import Loader from "../loader";
 import CreateAndUpdateModal from "../modal/create-and-update-modal";
 import NoteForm from "../note-form/note-form";
-import { useLoader } from "../hooks/use-loader";
-import Loader from "../loader";
+import styles from "./note-card.module.scss";
 
 const NoteCard: FC = ({
   _id: id,
@@ -69,7 +69,7 @@ const NoteCard: FC = ({
       if (id) {
         await dispatch(deleteNotes(id));
         toast({
-          title: `Note Deleted`,
+          title: `Note Delted`,
           description: `Your note has been successfully deleted.`,
           status: "success",
           position: "top-right",

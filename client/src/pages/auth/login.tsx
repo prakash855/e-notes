@@ -8,7 +8,6 @@ import { Box, Button } from "@/lib";
 
 import { AuthButton } from "../../components/auth-button";
 import { SubmitButton } from "../../components/submit-button";
-import { useLoader } from "../../hooks/use-loader";
 import {
   email,
   guestUserCredential,
@@ -16,6 +15,7 @@ import {
   loginValidationSchema as validationSchema,
   password,
 } from "../../constants";
+import { useLoader } from "../../hooks/use-loader";
 import { ErrorMessage, Field, Form, Formik } from "../../lib";
 import { login } from "../../services";
 import { AppDispatch } from "../../store";

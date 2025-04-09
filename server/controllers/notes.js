@@ -74,7 +74,7 @@ export const archiveNotes = async ({ params }, res) => {
     }
     res.json(updatedNote);
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: `Internal Server Error ${error}` });
   }
 };
 
@@ -107,6 +107,6 @@ export const pinNotes = async ({ params: { id } }, res) => {
       res.json(updatedNote);
     }
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
   }
 };

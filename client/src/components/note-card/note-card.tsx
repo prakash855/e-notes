@@ -135,7 +135,7 @@ const NoteCard: FC = ({
         onMouseLeave={() => setHovered(false)}
       >
         <CardHeader className="flex justify-between items-center">
-          <Heading size="md">{title}</Heading>
+          <Heading size="sm">{title}</Heading>
           <div onClick={handlePinned} className={getIconHoverClass(isHovered)}>
             {isPinned ? (
               <BsPinFill className={styles["icon-style"]} />

@@ -123,3 +123,7 @@ export const guestUserCredential: loginInitalValueType = {
   email: "prakash@gmail.com",
   password: "123456",
 };
+
+export const loading = "loading";
+export const succeeded = "succeeded";
+export const failed = "failed";

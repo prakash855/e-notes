@@ -2,7 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { User } from "@/types";
 
-import { authState as initialState } from "../constants";
+import {
+  authState as initialState,
+  failed,
+  loading,
+  succeeded,
+} from "../constants";
 import { login, logout, signup } from "../services";
 
 const authSlice = createSlice({
@@ -13,7 +18,7 @@ const authSlice = createSlice({
     // signup
     builder
       .addCase(signup.pending, (state) => {
-        state.status = "loading";
+        state.status = loading;
         state.error = null;
       })
       .addCase(
@@ -27,7 +32,7 @@ const authSlice = createSlice({
             },
           }
         ) => {
-          state.status = "succeeded";
+          state.status = succeeded;
           state.isLoggedIn = true;
           state.token = token;
           state.user = {
@@ -39,7 +44,7 @@ const authSlice = createSlice({
         }
       )
       .addCase(signup.rejected, (state, { payload }) => {
-        state.status = "failed";
+        state.status = failed;
         state.error = payload
           ? JSON.parse(JSON.stringify(payload))
           : "Signup failed";
@@ -47,7 +52,7 @@ const authSlice = createSlice({
 
       // login
       .addCase(login.pending, (state) => {
-        state.status = "loading";
+        state.status = loading;
       })
       .addCase(
         login.fulfilled,
@@ -55,7 +60,7 @@ const authSlice = createSlice({
           state,
           action: PayloadAction<{ token: string; user: User; message: string }>
         ) => {
-          state.status = "succeeded";
+          state.status = succeeded;
           state.isLoggedIn = true;
           state.token = action.payload.token;
           state.user = action.payload.user; // Correctly assigning the user object from the payload
@@ -64,23 +69,23 @@ const authSlice = createSlice({
       )
 
       .addCase(login.rejected, (state, { error: { message } }) => {
-        state.status = "failed";
+        state.status = failed;
         state.error = message || "login failed";
       })
 
       // logout
       .addCase(logout.pending, (state) => {
-        state.status = "loading";
+        state.status = loading;
       })
       .addCase(logout.fulfilled, (state) => {
-        state.status = "succeeded";
+        state.status = succeeded;
         state.user = null;
         state.token = null;
         state.isLoggedIn = false;
         state.error = null;
       })
       .addCase(logout.rejected, (state, { payload }) => {
-        state.status = "failed";
+        state.status = failed;
         state.error = payload as string;
       });
   },

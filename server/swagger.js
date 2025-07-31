@@ -1,8 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 // swagger.js
 import swaggerJSDoc from "swagger-jsdoc";
 
 const url = process.env.BASE_URL || "http://localhost:5000";
-console.log({ url });
+
 const options = {
   definition: {
     openapi: "3.0.0",

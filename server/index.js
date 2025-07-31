@@ -1,6 +1,7 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
@@ -11,7 +12,6 @@ import authRoutes from "./routes/auth.js";
 import { authMiddleware } from "./middleware/auth.js";
 
 const app = express();
-dotenv.config();
 
 // CORS configuration
 const corsOptions = {

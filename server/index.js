@@ -1,15 +1,17 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./swagger.js";
 
 import notesRoutes from "./routes/notes.js";
 import authRoutes from "./routes/auth.js";
 import { authMiddleware } from "./middleware/auth.js";
 
 const app = express();
-dotenv.config();
 
 // CORS configuration
 const corsOptions = {
@@ -31,6 +33,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/notes", authMiddleware, notesRoutes);
 app.use("/auth", authRoutes);
+// Swagger route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT = process.env.PORT || 5000;
 

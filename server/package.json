@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test:coverage": "jest --coverage"
   },
   "license": "MIT",
   "dependencies": {
@@ -22,6 +24,8 @@
     "@typescript-eslint/eslint-plugin": "^8.29.1",
     "@typescript-eslint/parser": "^8.29.1",
     "eslint": "^9.24.0",
-    "eslint-plugin-node": "^11.1.0"
+    "eslint-plugin-node": "^11.1.0",
+    "jest": "^30.0.5",
+    "supertest": "^7.1.4"
   }
 }

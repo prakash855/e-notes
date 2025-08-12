@@ -34,6 +34,8 @@ app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
+const connection = mongoose.connection;
+
 mongoose
   .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
@@ -44,6 +46,13 @@ mongoose
   .catch((error) => console.error("Error connecting to MongoDB:", error));
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Only start server if not in test mode
+let server = null;
+
+if (process.env.NODE_ENV !== "test") {
+  server = app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
+export { connection as mongooseConnection, app, server };

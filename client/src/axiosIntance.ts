@@ -6,6 +6,7 @@ const { VITE_APP_BASE_URL: baseURL } = import.meta.env;
 
 const axiosInstance = axios.create({
   baseURL,
+  withCredentials: true, // Enable credentials handling
 });
 
 axiosInstance.interceptors.request.use(
@@ -18,7 +19,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

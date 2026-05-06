@@ -48,12 +48,21 @@ export const updateNotes = async ({ params, body }, res) => {
   const { id: _id } = params;
   const notes = body;
   unknowNoteHandler(_id, res);
-  const updatedNotes = await Note.findByIdAndUpdate(
-    _id,
-    { ...notes, _id },
-    { new: true }
-  );
-  res.json(updatedNotes);
+  try {
+    const updatedNotes = await Note.findByIdAndUpdate(
+      _id,
+      { ...notes, _id },
+      { new: true },
+    );
+    if (!updatedNotes) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+    res.json(updatedNotes);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `Failed to update note: ${error.message}` });
+  }
 };
 
 export const archiveNotes = async ({ params }, res) => {
@@ -67,7 +76,7 @@ export const archiveNotes = async ({ params }, res) => {
     const updatedNote = await Note.findByIdAndUpdate(
       _id,
       { isArchived: !note.isArchived },
-      { new: true }
+      { new: true },
     );
     if (!updatedNote) {
       return res.status(404).send(`Failed to update note`);
@@ -89,7 +98,7 @@ export const pinNotes = async ({ params: { id } }, res) => {
       const updatedNote = await Note.findByIdAndUpdate(
         id,
         { isPinned: false },
-        { new: true }
+        { new: true },
       );
       if (!updatedNote) return res.status(404).send(`Failed to update note`);
       res.json(updatedNote);
@@ -101,7 +110,7 @@ export const pinNotes = async ({ params: { id } }, res) => {
       const updatedNote = await Note.findByIdAndUpdate(
         id,
         { isPinned: true },
-        { new: true }
+        { new: true },
       );
       if (!updatedNote) return res.status(404).send(`Failed to update note`);
       res.json(updatedNote);

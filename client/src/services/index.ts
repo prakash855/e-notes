@@ -25,7 +25,7 @@ export const fetchNotes = createAsyncThunk(
       } else
         return rejectWithValue(error.response?.data?.message || error.message);
     }
-  }
+  },
 );
 
 export const fetchNotesById = createAsyncThunk(
@@ -33,7 +33,7 @@ export const fetchNotesById = createAsyncThunk(
   async (_id: string) => {
     const { data } = await axiosInstance(`${notesAPI}/${_id}`);
     return data;
-  }
+  },
 );
 
 export const createNotes = createAsyncThunk(
@@ -53,7 +53,7 @@ export const createNotes = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
-  }
+  },
 );
 
 export const deleteNotes = createAsyncThunk(
@@ -61,18 +61,22 @@ export const deleteNotes = createAsyncThunk(
   async (_id: string) => {
     await axiosInstance.delete(`${notesAPI}/${_id}`);
     return _id;
-  }
+  },
 );
 
 export const updateNotes = createAsyncThunk(
   "notes/updatedNotes",
-  async (updatedNote: Note) => {
-    const { data } = await axiosInstance.patch(
-      `${notesAPI}/${updatedNote._id}`,
-      updatedNote
-    );
-    return data;
-  }
+  async (updatedNote: Note, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.patch(
+        `${notesAPI}/${updatedNote._id}`,
+        updatedNote,
+      );
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  },
 );
 
 export const archiveNoteById = createAsyncThunk(
@@ -80,7 +84,7 @@ export const archiveNoteById = createAsyncThunk(
   async (_id: string) => {
     const { data } = await axiosInstance.patch(`${notesAPI}/${_id}/archive`);
     return data;
-  }
+  },
 );
 
 export const pinNote = createAsyncThunk("notes/pinNote", async (id: string) => {
@@ -99,7 +103,7 @@ export const signup = createAsyncThunk(
 
       const { data, status }: AxiosResponse = await axiosInstance.post(
         `${authAPI}/signup`,
-        signupData
+        signupData,
       );
 
       if (status !== 201) {
@@ -119,7 +123,7 @@ export const signup = createAsyncThunk(
         // Regular error
       }
     }
-  }
+  },
 );
 
 export const login = createAsyncThunk(
@@ -128,7 +132,7 @@ export const login = createAsyncThunk(
     try {
       const { data, status }: AxiosResponse = await axiosInstance.post(
         `auth/login`,
-        credential
+        credential,
       );
       if (status !== 200) {
         throw new Error(`Failed to login`);
@@ -146,7 +150,7 @@ export const login = createAsyncThunk(
         return rejectWithValue((error as Error).message);
       }
     }
-  }
+  },
 );
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
@@ -154,7 +158,7 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     // Assuming the API endpoint for logout is `${authAPI}/logout`
     const { data, status }: AxiosResponse = await axiosInstance.post(
-      `${authAPI}/logout`
+      `${authAPI}/logout`,
     );
 
     if (status !== 200) {

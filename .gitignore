@@ -1,0 +1,21 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Frontend env files
+client/.env
+client/.env.*
+!client/.env.example
+
+# Backend env files
+server/.env
+server/.env.*
+!server/.env.example
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
